@@ -1,0 +1,10 @@
+.*
+
+# Intellij
+*.iml
+*.iws
+*.ipr
+
+# Maven
+**/log/
+**/target/
