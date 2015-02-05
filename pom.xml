@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.onyx</groupId>
+    <artifactId>onyx</artifactId>
+    <version>1.0.0SNAPSCHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Onyx</name>
+    <description>Onyx</description>
+    <url>https://github.com/masters-info-nantes/onyx</url>
+
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License version 3</name>
+            <url>http://www.gnu.org/licenses/agpl.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>maximepvrt</id>
+            <name>Maxime Pauvert</name>
+            <organization>ALMA - Université de Nantes</organization>
+            <organizationUrl>http://www.maxime.pauvert.me</organizationUrl>
+            <timezone>Europe/Paris</timezone>
+        </developer>
+    </developers>
+
+    <contributors />
+
+    <modules>
+        <module>onyx-platform</module>
+        <module>onyx-core</module>
+        <module>onyx-emulator</module>
+    </modules>
+
+    <scm>
+        <connection>scm:git:https://github.com/masters-info-nantes/onyx.git</connection>
+        <developerConnection>
+            scm:git:https://github.com/masters-info-nantes/onyx.git
+        </developerConnection>
+        <url>https://github.com/masters-info-nantes/onyx.git</url>
+    </scm>
+</project>
