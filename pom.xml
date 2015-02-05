@@ -4,7 +4,7 @@
 
     <groupId>com.onyx</groupId>
     <artifactId>onyx</artifactId>
-    <version>1.0.0SNAPSCHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Onyx</name>
