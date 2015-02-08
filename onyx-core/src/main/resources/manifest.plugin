@@ -1,0 +1,4 @@
+name = core
+version = ${project.version}
+description = core of onyx
+class = com.onyx.core.OCore

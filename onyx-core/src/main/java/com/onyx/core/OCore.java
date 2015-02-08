@@ -1,0 +1,15 @@
+package com.onyx.core;
+
+import com.onyx.platform.OPlugin;
+
+/**
+ * Created by Maxime on 05/02/15.
+ */
+public class OCore extends OPlugin {
+
+    @Override
+    protected void onCreate() {
+
+    }
+
+}
