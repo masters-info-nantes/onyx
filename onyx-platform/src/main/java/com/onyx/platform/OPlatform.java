@@ -1,7 +1,5 @@
 package com.onyx.platform;
 
-import com.sun.prism.shader.Solid_TextureYV12_Loader;
-
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
