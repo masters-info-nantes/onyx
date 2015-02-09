@@ -1,0 +1,6 @@
+package = com.onyx.core
+name = core
+version = ${project.version}
+description = core of onyx
+mainClass = com.onyx.core.OCore
+icon = icon.png

@@ -35,6 +35,7 @@
         <module>onyx-platform</module>
         <module>onyx-core</module>
         <module>onyx-emulator</module>
+        <module>onyx-launcher</module>
     </modules>
 
     <dependencyManagement>

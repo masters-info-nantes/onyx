@@ -13,18 +13,6 @@ import java.util.Properties;
  */
 public class OPlatform {
 
-    public static void main (String[] args) throws Exception{
-        OPlatform platform = new OPlatform();
-        platform.loadAllPlugins();
-        for(Map.Entry<String, OPlugin> entry : platform.getActivePlugins().entrySet()) {
-            String key = entry.getKey();
-            System.out.println(key);
-            OPlugin value = entry.getValue();
-            System.out.println(value);
-        }
-        System.out.println("ok :)");
-    }
-
     private Map<String, OPlugin> activePlugins = new HashMap<String, OPlugin>();
 
     public void loadAllPlugins() throws Exception{
@@ -37,10 +25,9 @@ public class OPlatform {
             if (i > 0) {
                 extension = file.getName().substring(i + 1);
             }
-            if(extension.equals(".jar")) {
+            if(extension.equals("jar")) {
                 loadPlugin(file.toURL());
             }
-            loadPlugin(file.toURL());
         }
     }
 
@@ -52,19 +39,20 @@ public class OPlatform {
         URL[] urls = new URL[]{url};
         URLClassLoader classLoader = URLClassLoader.newInstance(urls, OPlugin.class.getClassLoader());
 
-        InputStream is = classLoader.getResourceAsStream("manifest.plugin");
+        InputStream is = classLoader.getResourceAsStream("manifest.oplugin");
         Properties p = new Properties();
         p.load(is);
 
         System.out.println(url.getPath());
 
-         Class<?> cl = Class.forName(p.getProperty("class"), false, classLoader);
+         Class<?> cl = Class.forName(p.getProperty("mainClass"), false, classLoader);
         if (OPlugin.class.isAssignableFrom(cl)) {
             OPlugin plugin = (OPlugin) cl.newInstance();
-            plugin.name = p.getProperty("name");
-            plugin.name = p.getProperty("version");
-            plugin.name = p.getProperty("description");
-            activePlugins.put(cl.getPackage().getName(),plugin);
+            plugin.pluginName = p.getProperty("name");
+            plugin.pluginVersion = p.getProperty("version");
+            plugin.pluginDescription = p.getProperty("description");
+            plugin.pluginPackage = p.getProperty("package");
+            activePlugins.put(plugin.pluginPackage,plugin);
             plugin.onCreate();
         } else {
             throw new IllegalAccessException("La classe doit être une sous-classe de OPlugin");

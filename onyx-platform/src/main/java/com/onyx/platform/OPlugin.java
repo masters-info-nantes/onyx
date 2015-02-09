@@ -5,9 +5,10 @@ package com.onyx.platform;
  */
 public abstract class OPlugin {
 
-    String name;
-    String version;
-    String description;
+    String pluginName;
+    String pluginVersion;
+    String pluginDescription;
+    String pluginPackage;
 
     protected abstract void onCreate();
 }
