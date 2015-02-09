@@ -1,0 +1,5 @@
+package = com.onyx.browser
+name = Browser
+version = ${project.version}
+description = core of onyx
+mainClass = com.onyx.browser.OBrowser
