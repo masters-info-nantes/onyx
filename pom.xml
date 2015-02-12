@@ -37,6 +37,7 @@
         <module>onyx-emulator</module>
         <module>onyx-app-launcher</module>
         <module>onyx-app-web-browser</module>
+        <module>onyx-gui</module>
     </modules>
 
     <dependencyManagement>

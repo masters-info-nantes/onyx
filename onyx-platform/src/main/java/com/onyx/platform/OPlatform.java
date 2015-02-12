@@ -3,6 +3,7 @@ package com.onyx.platform;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.HashMap;
@@ -64,21 +65,35 @@ public class OPlatform {
 
         OPluginInfo plugin = new OPluginInfo();
         plugin.pluginName = p.getProperty("name");
+        System.out.print(plugin.pluginName);
         plugin.pluginVersion = p.getProperty("version");
         plugin.pluginDescription = p.getProperty("description");
         plugin.pluginPackage = p.getProperty("package");
         plugin.pluginClassLoader = classLoader;
         plugin.pluginMainClass = p.getProperty("mainClass");
+        plugin.pluginUrl = url;
         plugins.put(plugin.pluginPackage,plugin);
     }
 
     public void loadPlugin(OPluginInfo plugin) {
+        loadPlugin(plugin, plugin);
+    }
+
+    public void loadPlugin(OPluginInfo plugin, OPluginInfo pluginDependency) {
+        if(plugin != pluginDependency) {
+            URL[] urls = new URL[]{plugin.pluginUrl};
+            plugin.pluginClassLoader = URLClassLoader.newInstance(urls, pluginDependency.pluginClassLoader);
+        }
 
         Class<?> cl = null;
+
         try {
             cl = Class.forName(plugin.pluginMainClass, false, plugin.pluginClassLoader);
+            System.out.print(cl);
             if (OPlugin.class.isAssignableFrom(cl)) {
                 OPlugin p = (OPlugin) cl.newInstance();
+                p.platform = this;
+                p.infos = plugin;
                 p.onCreate();
             } else {
                 throw new IllegalAccessException("Class must be subclass of OPlugin");
@@ -90,7 +105,6 @@ public class OPlatform {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
     }
 
     public Map<String, OPluginInfo> getPlugins() {

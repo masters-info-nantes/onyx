@@ -25,6 +25,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>onyx-gui</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>onyx-app-launcher</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
@@ -54,7 +60,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>onyx-core</includeArtifactIds>
+                            <includeArtifactIds>onyx-core,onyx-gui</includeArtifactIds>
                             <includeScope>provided</includeScope>
                         </configuration>
                     </execution>

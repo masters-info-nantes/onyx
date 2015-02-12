@@ -12,6 +12,7 @@ public class OCore extends OPlugin {
     @Override
     protected void onCreate() {
         System.out.println("Chargement du core");
+        this.loadPlugin("com.onyx.gui");
         appManager = new OAppManager();
         appManager.run(appManager.getApp("com.onyx.launcher"));
     }
