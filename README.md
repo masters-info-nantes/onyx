@@ -12,6 +12,6 @@ If your proxy and the port that you seen with the command "echo $http_proxy" are
 Then you do the command "cd 'way to your folder'" to place you in the folder where you cloned the project.
 Type the command "mvn clean install".
 
-Then type "cd onyx-emulator"
+Then type "cd onyx-emulator/"
 
 To run it type "mvn exec:java-X"
