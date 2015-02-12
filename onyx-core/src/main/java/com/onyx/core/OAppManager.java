@@ -1,7 +1,6 @@
 package com.onyx.core;
 
 import com.onyx.platform.OPlugin;
-import com.sun.prism.shader.Solid_TextureYV12_Loader;
 
 import java.io.File;
 import java.io.InputStream;
