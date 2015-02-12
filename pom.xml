@@ -35,8 +35,8 @@
         <module>onyx-platform</module>
         <module>onyx-core</module>
         <module>onyx-emulator</module>
-        <module>onyx-launcher</module>
-        <module>onyx-app-browser</module>
+        <module>onyx-app-launcher</module>
+        <module>onyx-app-web-browser</module>
     </modules>
 
     <dependencyManagement>
