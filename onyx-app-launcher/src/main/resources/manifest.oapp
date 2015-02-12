@@ -1,0 +1,5 @@
+package = com.onyx.launcher
+name = Launcher
+version = ${project.version}
+description = core of onyx
+mainClass = com.onyx.launcher.OLauncher

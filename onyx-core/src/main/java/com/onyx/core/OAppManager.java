@@ -19,6 +19,10 @@ public class OAppManager {
 
     private Map<String, OApp> apps = new HashMap<String, OApp>();
 
+    public OAppManager() {
+        loadAllApps();
+    }
+
     public void loadAllApps() {
         File dirContent = new File("target/apps");
         File[] dirfiles = dirContent.listFiles();
@@ -66,7 +70,6 @@ public class OAppManager {
         app.appPackage = p.getProperty("package");
         app.appMainClass = p.getProperty("mainClass");
         app.appClassLoader = classLoader;
-
         apps.put(p.getProperty("package"), app);
 
     }

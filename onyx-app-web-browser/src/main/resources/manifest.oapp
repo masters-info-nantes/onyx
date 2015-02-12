@@ -1,0 +1,5 @@
+package = com.onyx.webbrowser
+name = Web Browser
+version = ${project.version}
+description = web browser
+mainClass = com.onyx.webbrowser.OWebBrowser

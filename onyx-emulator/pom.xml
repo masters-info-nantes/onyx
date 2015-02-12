@@ -25,13 +25,13 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>onyx-launcher</artifactId>
+            <artifactId>onyx-app-launcher</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>onyx-app-browser</artifactId>
+            <artifactId>onyx-app-web-browser</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
@@ -69,7 +69,7 @@
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
                             <overWriteIfNewer>true</overWriteIfNewer>
-                            <includeArtifactIds>onyx-launcher,onyx-app-browser</includeArtifactIds>
+                            <includeArtifactIds>onyx-app-launcher,onyx-app-web-browser</includeArtifactIds>
                             <includeScope>provided</includeScope>
                         </configuration>
                     </execution>
