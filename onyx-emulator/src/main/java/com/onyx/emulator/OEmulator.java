@@ -9,11 +9,7 @@ public class OEmulator {
 
     public OEmulator() {
         OPlatform platform = new OPlatform();
-        try {
-            platform.loadAllPlugins();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        platform.loadPlugin(platform.getPlugin("com.onyx.core"));
     }
 
 }

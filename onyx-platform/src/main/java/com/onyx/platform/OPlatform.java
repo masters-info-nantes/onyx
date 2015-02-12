@@ -1,6 +1,7 @@
 package com.onyx.platform;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -13,9 +14,13 @@ import java.util.Properties;
  */
 public class OPlatform {
 
-    private Map<String, OPlugin> activePlugins = new HashMap<String, OPlugin>();
+    private Map<String, OPluginInfo> plugins = new HashMap<String, OPluginInfo>();
 
-    public void loadAllPlugins() throws Exception{
+    public OPlatform() {
+        loadAllPluginsInfo();
+    }
+
+    public void loadAllPluginsInfo() {
         File dirContent = new File("target/plugins");
         System.out.println(dirContent.getAbsolutePath());
         File[] dirfiles = dirContent.listFiles();
@@ -26,41 +31,74 @@ public class OPlatform {
                 extension = file.getName().substring(i + 1);
             }
             if(extension.equals("jar")) {
-                loadPlugin(file.toURL());
+                try {
+                    loadPluginInfo(file.toURL());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    public void loadPlugin(String url) throws Exception {
-        loadPlugin(new URL("file://"+url));
+    public void loadPluginInfo(String url) {
+        try {
+            loadPluginInfo(new URL("file://" + url));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void loadPlugin(URL url) throws Exception {
+    public void loadPluginInfo(URL url) {
         URL[] urls = new URL[]{url};
         URLClassLoader classLoader = URLClassLoader.newInstance(urls, OPlugin.class.getClassLoader());
 
         InputStream is = classLoader.getResourceAsStream("manifest.oplugin");
         Properties p = new Properties();
-        p.load(is);
+        try {
+            p.load(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         System.out.println(url.getPath());
 
-         Class<?> cl = Class.forName(p.getProperty("mainClass"), false, classLoader);
-        if (OPlugin.class.isAssignableFrom(cl)) {
-            OPlugin plugin = (OPlugin) cl.newInstance();
-            plugin.pluginName = p.getProperty("name");
-            plugin.pluginVersion = p.getProperty("version");
-            plugin.pluginDescription = p.getProperty("description");
-            plugin.pluginPackage = p.getProperty("package");
-            activePlugins.put(plugin.pluginPackage,plugin);
-            plugin.onCreate();
-        } else {
-            throw new IllegalAccessException("La classe doit être une sous-classe de OPlugin");
-        }
+        OPluginInfo plugin = new OPluginInfo();
+        plugin.pluginName = p.getProperty("name");
+        plugin.pluginVersion = p.getProperty("version");
+        plugin.pluginDescription = p.getProperty("description");
+        plugin.pluginPackage = p.getProperty("package");
+        plugin.pluginClassLoader = classLoader;
+        plugin.pluginMainClass = p.getProperty("mainClass");
+        plugins.put(plugin.pluginPackage,plugin);
     }
 
-    public Map<String, OPlugin> getActivePlugins() {
-        return activePlugins;
+    public void loadPlugin(OPluginInfo plugin) {
+
+        Class<?> cl = null;
+        try {
+            cl = Class.forName(plugin.pluginMainClass, false, plugin.pluginClassLoader);
+            if (OPlugin.class.isAssignableFrom(cl)) {
+                OPlugin p = (OPlugin) cl.newInstance();
+                p.onCreate();
+            } else {
+                throw new IllegalAccessException("Class must be subclass of OPlugin");
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Map<String, OPluginInfo> getPlugins() {
+        return plugins;
+    }
+
+    public OPluginInfo getPlugin(String name) {
+        return plugins.get(name);
     }
 
 }
