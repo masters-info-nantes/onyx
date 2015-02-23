@@ -61,11 +61,8 @@ public class OPlatform {
             e.printStackTrace();
         }
 
-        System.out.println(url.getPath());
-
         OPluginInfo plugin = new OPluginInfo();
         plugin.pluginName = p.getProperty("name");
-        System.out.print(plugin.pluginName);
         plugin.pluginVersion = p.getProperty("version");
         plugin.pluginDescription = p.getProperty("description");
         plugin.pluginPackage = p.getProperty("package");
@@ -89,7 +86,6 @@ public class OPlatform {
 
         try {
             cl = Class.forName(plugin.pluginMainClass, false, plugin.pluginClassLoader);
-            System.out.print(cl);
             if (OPlugin.class.isAssignableFrom(cl)) {
                 OPlugin p = (OPlugin) cl.newInstance();
                 p.platform = this;
