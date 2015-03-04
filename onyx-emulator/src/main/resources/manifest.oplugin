@@ -1,0 +1,5 @@
+package = com.onyx.emulator
+name = emulator
+version = ${project.version}
+description = emulator of onyx
+mainClass = com.onyx.emulator.OEmulator

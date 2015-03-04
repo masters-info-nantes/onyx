@@ -1,15 +1,19 @@
 package com.onyx.emulator;
 
-import com.onyx.platform.OPlatform;
+import com.onyx.platform.OPlugin;
 
 /**
  * Created by Maxime on 05/02/15.
  */
-public class OEmulator {
+public class OEmulator extends OPlugin{
 
     public OEmulator() {
-        OPlatform platform = new OPlatform();
-        platform.loadPlugin(platform.getPlugin("com.onyx.core"));
+
+    }
+
+    @Override
+    protected void onCreate() {
+
     }
 
 }

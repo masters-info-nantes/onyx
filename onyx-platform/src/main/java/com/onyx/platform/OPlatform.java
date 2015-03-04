@@ -1,6 +1,15 @@
 package com.onyx.platform;
 
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -19,13 +28,55 @@ public class OPlatform {
 
     public OPlatform() {
         loadAllPluginsInfo();
+        loadDefaultPlugins();
+    }
+
+    public void loadDefaultPlugins()
+    {
+        File file = new File("default-plugins.xml");
+
+
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
+                .newInstance();
+        DocumentBuilder documentBuilder =null;
+        Document document = null;
+
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        }
+        catch(ParserConfigurationException e)
+        {
+            System.out.println("parser configuration error");
+        }
+        try {
+            document = documentBuilder.parse(file);
+        }
+        catch(Exception e)
+        {
+            System.out.println("parsing error");
+        }
+        NodeList xmlPluginsElements = null;
+        try{
+            xmlPluginsElements = document.getElementsByTagName("plugin");
+        }
+        catch(NullPointerException e)
+        {
+            System.out.println("no plugin tags found");
+        }
+        for(int i=0;i<xmlPluginsElements.getLength();i++)
+        {
+            System.out.println("Load plugin: "+xmlPluginsElements.item(i).getTextContent());
+            OPluginInfo tempInfo = getPlugin(xmlPluginsElements.item(i).getTextContent());
+            System.out.println("Plugin infos: "+tempInfo.pluginName);
+            loadPlugin(tempInfo);
+        }
     }
 
     public void loadAllPluginsInfo() {
         File dirContent = new File("target/plugins");
         System.out.println(dirContent.getAbsolutePath());
-        File[] dirfiles = dirContent.listFiles();
-        for (File file : dirfiles) {
+        File[] files = dirContent.listFiles();
+        for (File file : files) {
             String extension = "";
             int i = file.getName().lastIndexOf('.');
             if (i > 0) {
@@ -33,6 +84,7 @@ public class OPlatform {
             }
             if(extension.equals("jar")) {
                 try {
+                    System.out.println("Plugin available: "+file.getName());
                     loadPluginInfo(file.toURL());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -58,7 +110,8 @@ public class OPlatform {
         try {
             p.load(is);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("[ONYX] Fichier manifest du plugin introuvable");
         }
 
         OPluginInfo plugin = new OPluginInfo();
