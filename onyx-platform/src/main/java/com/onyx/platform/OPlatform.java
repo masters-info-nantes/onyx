@@ -5,6 +5,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.net.MalformedURLException;
+import java.util.Scanner;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,19 +30,87 @@ public class OPlatform {
     private Map<String, OPluginInfo> plugins = new HashMap<String, OPluginInfo>();
 
     public OPlatform() {
+        System.out.println("Lancement de la plateforme...");
         loadAllPluginsInfo();
-        loadDefaultPlugins();
+        showMenu();
     }
 
-    public void loadDefaultPlugins()
+    private void showMenu()
     {
-        File file = new File("target/default-plugins.xml");
+        System.out.println("Menu:");
+        System.out.println("0 - Liste des plugins disponibles");
+        System.out.println("1 - Lancement des plugins par défaut");
+        System.out.println("2 - Chargement de plugins spécifiques");
+        System.out.println("3 - Création d'un plugin d'example");
+        System.out.println("4 - Quitter");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Que voulez vous faire :");
+        int choice = sc.nextInt();
+        if(choice==0) listPlugins();
+        else if(choice==1) loadDefaultPlugins();
+        else if(choice==2) loadSpecificPlugins();
+        else if(choice==3) generateEmptyPlugin();
+        else if(choice==4) System.out.println("La plateforme va se fermer...");
+    }
+
+    private void listPlugins()
+    {
+        System.out.println("Liste des plugins disponibles:");
+        for(String key : plugins.keySet())
+        {
+            System.out.println("Plugin: "+ plugins.get(key).pluginName);
+            System.out.println("Description: "+ plugins.get(key).pluginDescription+"\n");
+        }
+        showMenu();
+    }
+
+    private void loadDefaultPlugins()
+    {
+        System.out.println("Chargement des plugins par défault...");
+        loadPluginsFromXMLFile("target/default-plugins.xml");
+    }
+
+    private void loadSpecificPlugins()
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Chemin du fichier xml des plugins :");
+        String file = sc.next();
+        loadPluginsFromXMLFile(file);
+    }
+
+    private void generateEmptyPlugin()
+    {
+
+        OPluginInfo newPlugin = new OPluginInfo();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Nom du plugin: ");
+        newPlugin.pluginName = sc.nextLine();
+        System.out.print("Description du plugin: ");
+        newPlugin.pluginDescription = sc.nextLine();
+        System.out.print("Classe principale du plugin: ");
+        newPlugin.pluginMainClass = sc.nextLine();
+        System.out.print("Package du plugin: ");
+        newPlugin.pluginPackage = sc.nextLine();
+        System.out.print("Emplacement du plugin: ");
+        try {
+            newPlugin.pluginUrl = new URL("file://"+sc.nextLine());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        // TO-DO
+        System.out.println("Plugin généré!");
+        showMenu();
+    }
+
+    public void loadPluginsFromXMLFile(String xmlFile)
+    {
+
+        File file = new File(xmlFile);
 
         if(!file.exists()) {
-            System.out.println("default-plugins.xml not exist "+ file.getAbsolutePath());
+            System.out.println(file.getName()+" does not exist "+ file.getAbsolutePath());
             return;
         }
-
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
                 .newInstance();
