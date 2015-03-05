@@ -32,10 +32,9 @@ public class OPlatform {
     public OPlatform() {
         System.out.println("Lancement de la plateforme...");
         loadAllPluginsInfo();
-        showMenu();
     }
 
-    private void showMenu()
+    public void showMenu()
     {
         System.out.println("Menu:");
         System.out.println("0 - Liste des plugins disponibles");
@@ -53,7 +52,7 @@ public class OPlatform {
         else if(choice==4) System.out.println("La plateforme va se fermer...");
     }
 
-    private void listPlugins()
+    public void listPlugins()
     {
         System.out.println("Liste des plugins disponibles:");
         for(String key : plugins.keySet())
@@ -64,7 +63,7 @@ public class OPlatform {
         showMenu();
     }
 
-    private void loadDefaultPlugins()
+    public void loadDefaultPlugins()
     {
         System.out.println("Chargement des plugins par défault...");
         loadPluginsFromXMLFile("target/default-plugins.xml");
