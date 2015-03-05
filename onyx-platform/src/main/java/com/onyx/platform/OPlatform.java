@@ -33,7 +33,12 @@ public class OPlatform {
 
     public void loadDefaultPlugins()
     {
-        File file = new File("default-plugins.xml");
+        File file = new File("target/default-plugins.xml");
+
+        if(!file.exists()) {
+            System.out.println("default-plugins.xml not exist "+ file.getAbsolutePath());
+            return;
+        }
 
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory
@@ -49,7 +54,8 @@ public class OPlatform {
             System.out.println("parser configuration error");
         }
         try {
-            document = documentBuilder.parse(file);
+            if(documentBuilder != null)
+                document = documentBuilder.parse(file);
         }
         catch(Exception e)
         {
@@ -57,19 +63,23 @@ public class OPlatform {
         }
         NodeList xmlPluginsElements = null;
         try{
-            xmlPluginsElements = document.getElementsByTagName("plugin");
+            if(document != null)
+                xmlPluginsElements = document.getElementsByTagName("plugin");
         }
         catch(NullPointerException e)
         {
             System.out.println("no plugin tags found");
         }
-        for(int i=0;i<xmlPluginsElements.getLength();i++)
-        {
-            System.out.println("Load plugin: "+xmlPluginsElements.item(i).getTextContent());
-            OPluginInfo tempInfo = getPlugin(xmlPluginsElements.item(i).getTextContent());
-            System.out.println("Plugin infos: "+tempInfo.pluginName);
-            loadPlugin(tempInfo);
+        if(xmlPluginsElements != null) {
+            for(int i=0;i<xmlPluginsElements.getLength();i++)
+            {
+                System.out.println("Load plugin: "+xmlPluginsElements.item(i).getTextContent());
+                OPluginInfo tempInfo = getPlugin(xmlPluginsElements.item(i).getTextContent());
+                System.out.println("Plugin infos: "+tempInfo.pluginName);
+                loadPlugin(tempInfo);
+            }
         }
+
     }
 
     public void loadAllPluginsInfo() {

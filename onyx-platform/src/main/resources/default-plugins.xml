@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <plugins>
-<plugin>com.onyx.emulator</plugin>
-<plugin>com.onyx.core</plugin>
-<plugin>com.onyx.gui</plugin>
+    <plugin>com.onyx.emulator</plugin>
+    <plugin>com.onyx.core</plugin>
+    <plugin>com.onyx.gui</plugin>
 </plugins>
