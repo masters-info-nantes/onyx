@@ -136,11 +136,11 @@ public class OPlatform {
     }
 
     public void loadPlugin(OPluginInfo plugin) {
-        loadPlugin(plugin, plugin);
+        loadPlugin(plugin, null);
     }
 
     public void loadPlugin(OPluginInfo plugin, OPluginInfo pluginDependency) {
-        if(plugin != pluginDependency) {
+        if(pluginDependency != null) {
             URL[] urls = new URL[]{plugin.pluginUrl};
             plugin.pluginClassLoader = URLClassLoader.newInstance(urls, pluginDependency.pluginClassLoader);
         }
