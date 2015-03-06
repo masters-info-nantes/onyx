@@ -11,9 +11,15 @@ public class Main extends Application {
     private Stage primaryStage = null;
 
     public static void main (String[] args) throws Exception{
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
         OPlatform p = new OPlatform();
-        if(args.length>0) {
-            for (String param : args) {
+        p.primaryStage = primaryStage;
+        if(this.getParameters().getRaw().size()>0) {
+            for (String param : this.getParameters().getRaw()) {
                 if (param.equals("-menu"))
                     p.showMenu();
                 else if (param.equals("-debug")) {
@@ -28,10 +34,6 @@ public class Main extends Application {
         {
             p.loadDefaultPlugins();
         }
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
     }
 

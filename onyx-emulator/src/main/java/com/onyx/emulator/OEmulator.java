@@ -16,7 +16,10 @@ public class OEmulator extends OPlugin{
 
     @Override
     protected void onCreate() {
-        new Test();
+        this.getPlatform().getPrimaryStage().setTitle("Onyx - Emulator");
+        EmulatorUI ui = new EmulatorUI();
+        this.getPlatform().getPrimaryStage().setScene(ui.getScene());
+        this.getPlatform().getPrimaryStage().show();
     }
 
 }

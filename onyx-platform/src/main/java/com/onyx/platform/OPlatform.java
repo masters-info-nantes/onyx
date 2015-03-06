@@ -1,6 +1,7 @@
 package com.onyx.platform;
 
 
+import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -28,6 +29,7 @@ import java.util.Properties;
 public class OPlatform {
 
     private Map<String, OPluginInfo> plugins = new HashMap<String, OPluginInfo>();
+    Stage primaryStage;
 
     public OPlatform() {
         System.out.println("Lancement de la plateforme...");
@@ -242,6 +244,11 @@ public class OPlatform {
 
     public OPluginInfo getPlugin(String name) {
         return plugins.get(name);
+    }
+
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
 }
