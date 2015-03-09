@@ -1,14 +1,12 @@
 package com.onyx.platform;
 
-import java.net.URLClassLoader;
-
 /**
  * Created by Maxime on 05/02/15.
  */
 public abstract class OPlugin {
 
     OPlatform platform;
-    OPluginInfo infos;
+    OPluginProperty infos;
 
     public OPlugin(){}
 
@@ -22,11 +20,11 @@ public abstract class OPlugin {
         return platform;
     }
 
-    public OPluginInfo getInfos() {
+    public OPluginProperty getInfos() {
         return infos;
     }
 
     public void loadPlugin(String name) {
-        platform.loadPlugin(platform.getPlugin(name), this.getInfos());
+        platform.runPlugin(platform.getPlugin(name), this.getInfos());
     }
 }

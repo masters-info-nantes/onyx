@@ -1,5 +1,0 @@
-package = com.onyx.gui
-name = GUI
-version = ${project.version}
-description = gui of onyx
-mainClass = com.onyx.gui.OGui

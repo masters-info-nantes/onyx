@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<manifest>
+    <package>com.onyx.core</package>
+    <name>Core</name>
+    <version>${project.version}</version>
+    <description>Core of onyx</description>
+    <mainClass>com.onyx.core.OCore</mainClass>
+</manifest>

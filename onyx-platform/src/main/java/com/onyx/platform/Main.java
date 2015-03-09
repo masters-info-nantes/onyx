@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private Stage primaryStage = null;
+    private static OPlatform platform;
 
     public static void main (String[] args) throws Exception{
         launch(args);
@@ -16,23 +17,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        OPlatform p = new OPlatform();
-        p.primaryStage = primaryStage;
-        if(this.getParameters().getRaw().size()>0) {
-            for (String param : this.getParameters().getRaw()) {
-                if (param.equals("-menu"))
-                    p.showMenu();
-                else if (param.equals("-debug")) {
-                    //to-do
-                } else {
-                    System.out.println("Invalid Parameters");
-                }
-                //Others param to do
-            }
-        }
-        else
-        {
-            p.loadDefaultPlugins();
+        platform = new OPlatform();
+        platform.primaryStage = primaryStage;
+        if(this.getParameters().getRaw().size() > 0) {
+            OCommandManager commandManager = new OCommandManager(platform);
+            commandManager.run(this.getParameters().getRaw());
+        } else {
+            platform.loadDefaultPlugins();
         }
         this.primaryStage = primaryStage;
     }
