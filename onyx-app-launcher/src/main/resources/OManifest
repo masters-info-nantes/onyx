@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<manifest>
+    <id>com.onyx.launcher</id>
+    <version>${project.version}</version>
+    <name>Launcher</name>
+    <description></description>
+
+    <application>
+        <mainActivity>com.onyx.launcher.OLauncher</mainActivity>
+    </application>
+</manifest>

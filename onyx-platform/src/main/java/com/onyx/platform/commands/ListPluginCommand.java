@@ -12,8 +12,8 @@ public class ListPluginCommand {
         System.out.println("Liste des plugins disponibles:");
         for(String key : platform.getPlugins().keySet())
         {
-            System.out.println("Plugin: "+ platform.getPlugin(key).getPluginName());
-            System.out.println("Description: "+ platform.getPlugin(key).getPluginDescription()+"\n");
+            System.out.println("Plugin: "+ platform.getPlugin(key).getName());
+            System.out.println("Description: "+ platform.getPlugin(key).getDescription()+"\n");
         }
     }
 

@@ -5,22 +5,17 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import java.net.MalformedURLException;
-import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by Maxime on 05/02/15.
@@ -70,7 +65,7 @@ public class OPlatform {
             {
                 System.out.println("Load plugin: "+xmlPluginsElements.item(i).getTextContent());
                 OPluginProperty tempInfo = getPlugin(xmlPluginsElements.item(i).getTextContent());
-                System.out.println("Plugin infos: "+ tempInfo.getPluginName());
+                System.out.println("Plugin infos: "+ tempInfo.getName());
                 runPlugin(tempInfo);
             }
         }
@@ -88,68 +83,39 @@ public class OPlatform {
             }
             if(extension.equals("jar")) {
                 try {
-                    System.out.println("Plugin available: "+file.getName());
                     addPlugin(file.toURL());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-    }
-
-    public void addPlugin(String url) {
-        try {
-            addPlugin(new URL("file://" + url));
-        } catch (Exception e) {
-            e.printStackTrace();
+        for(OPluginProperty pluginProperty : this.plugins.values()) {
+            pluginProperty.updateDependencies(this);
         }
     }
 
     public void addPlugin(URL url) {
-        URL[] urls = new URL[]{url};
-        URLClassLoader classLoader = URLClassLoader.newInstance(urls, OPlugin.class.getClassLoader());
-
-        InputStream is = classLoader.getResourceAsStream("OManifest");
-
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder =null;
-        Document document = null;
-
-        try {
-            documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            document = documentBuilder.parse(is);
-        } catch(ParserConfigurationException e) {
-            System.out.println("parser configuration error");
-        } catch(Exception e) {
-            System.out.println("parsing error");
-        }
-
-
-        OPluginProperty plugin = new OPluginProperty();
-        plugin.pluginName = document.getElementsByTagName("name").item(0).getTextContent();
-        plugin.pluginVersion = document.getElementsByTagName("version").item(0).getTextContent();
-        plugin.pluginDescription = document.getElementsByTagName("description").item(0).getTextContent();
-        plugin.pluginPackage = document.getElementsByTagName("package").item(0).getTextContent();
-        plugin.pluginClassLoader = classLoader;
-        plugin.pluginMainClass = document.getElementsByTagName("mainClass").item(0).getTextContent();
-        plugin.pluginUrl = url;
-        plugins.put(plugin.getPluginPackage(),plugin);
+        OPluginProperty pluginProperty = OPluginProperty.newInstance(url);
+        plugins.put(pluginProperty.getId(),pluginProperty);
     }
 
     public void runPlugin(OPluginProperty plugin) {
-        runPlugin(plugin, null);
-    }
+        if(plugin.getDependencies().size() > 0) {
+            List<URL> urls = new ArrayList<URL>();
 
-    public void runPlugin(OPluginProperty plugin, OPluginProperty pluginDependency) {
-        if(pluginDependency != null) {
-            URL[] urls = new URL[]{plugin.pluginUrl};
-            plugin.pluginClassLoader = URLClassLoader.newInstance(urls, pluginDependency.pluginClassLoader);
+            for(OPluginProperty pluginProperty : plugin.getDependencies()) {
+                //runPlugin(pluginProperty);
+                urls.add(pluginProperty.url);
+            }
+            URL UrlsArray[] = new URL[urls.size()];
+            UrlsArray = urls.toArray(UrlsArray);
+            plugin.classLoader = URLClassLoader.newInstance(UrlsArray, plugin.classLoader);
         }
 
         Class<?> cl = null;
 
         try {
-            cl = Class.forName(plugin.pluginMainClass, false, plugin.pluginClassLoader);
+            cl = Class.forName(plugin.mainClass, false, plugin.classLoader);
             if (OPlugin.class.isAssignableFrom(cl)) {
                 OPlugin p = (OPlugin) cl.newInstance();
                 p.platform = this;
@@ -174,7 +140,6 @@ public class OPlatform {
     public OPluginProperty getPlugin(String name) {
         return plugins.get(name);
     }
-
 
     public Stage getPrimaryStage() {
         return primaryStage;

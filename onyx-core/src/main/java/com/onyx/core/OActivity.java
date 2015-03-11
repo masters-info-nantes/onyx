@@ -5,12 +5,6 @@ package com.onyx.core;
  */
 public abstract class OActivity {
 
-    OAppManager appManager;
-
     protected abstract void onCreate();
-
-    protected OAppManager getAppManager() {
-        return appManager;
-    }
 
 }

@@ -14,7 +14,7 @@ public class GenerateEmptyPluginCommand {
     public void generateEmptyPlugin()
     {
 
-        OPluginProperty newPlugin = new OPluginProperty();
+        //OPluginProperty newPlugin = new OPluginProperty();
         Scanner sc = new Scanner(System.in);
         System.out.print("Nom du plugin: ");
         //newPlugin.pluginName = sc.nextLine();

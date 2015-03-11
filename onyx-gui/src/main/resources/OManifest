@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <manifest>
-    <package>com.onyx.gui</package>
-    <name>Core</name>
+    <id>com.onyx.gui</id>
     <version>${project.version}</version>
+    <name>Core</name>
     <description>Core of onyx</description>
     <mainClass>com.onyx.gui.OGui</mainClass>
+
+    <dependencies>
+        <dependency>
+            <id>com.onyx.core</id>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </manifest>

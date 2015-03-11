@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <manifest>
-    <package>com.onyx.emulator</package>
-    <name>emulator</name>
+    <id>com.onyx.emulator</id>
     <version>${project.version}</version>
+    <name>emulator</name>
     <description>emulator of onyx</description>
     <mainClass>com.onyx.emulator.OEmulator</mainClass>
+
+    <dependencies>
+        <dependency>
+            <id>com.onyx.gui</id>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </manifest>

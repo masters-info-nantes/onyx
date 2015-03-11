@@ -29,7 +29,7 @@
                 <executions>
                     <execution>
                         <id>copy-plugins</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
@@ -59,7 +59,7 @@
                     </execution>
                     <execution>
                         <id>copy-apps</id>
-                        <phase>package</phase>
+                        <phase>install</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>

@@ -24,7 +24,4 @@ public abstract class OPlugin {
         return infos;
     }
 
-    public void loadPlugin(String name) {
-        platform.runPlugin(platform.getPlugin(name), this.getInfos());
-    }
 }
