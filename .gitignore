@@ -8,3 +8,11 @@
 # Maven
 **/log/
 **/target/
+
+# Latex
+
+*.aux 
+*.toc 
+*.log 
+*.out
+*.pdf
