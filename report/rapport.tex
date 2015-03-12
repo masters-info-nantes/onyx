@@ -1,0 +1,42 @@
+\documentclass[a4paper, 12pt]{article}
+
+%%%%% Packages %%%%%
+	%%%%% Langage %%%%% 
+\usepackage[frenchb]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+	%%%%% Graphique %%%%%
+\usepackage{graphicx}
+	%%%%% Mise en page %%%%%
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=black}
+\usepackage{fancyhdr}
+\usepackage{colortbl}
+\usepackage[a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+%%%%% Macros %%%%
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%%%%% Document %%%%%
+
+\begin{document}
+
+	%%%%% Page de garde %%%%%
+	\input{./page_de_garde.tex}
+
+
+	%%%%% Sommaire %%%%%
+	\tableofcontents
+	\newpage	
+
+	%%%%% Introduction %%%%%
+	\section{Introduction}
+	\input{./introduction.tex}
+	\newpage
+
+	%%%%% Conclusion %%%%%
+	\section{Conclusion}
+	\input{./conclusion.tex}
+	
+	
+\end{document}
