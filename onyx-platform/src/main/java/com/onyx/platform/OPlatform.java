@@ -99,7 +99,7 @@ public class OPlatform {
         plugins.put(pluginProperty.getId(),pluginProperty);
     }
 
-    public void runPlugin(OPluginProperty plugin) {
+    public OPlugin runPlugin(OPluginProperty plugin) {
         if(plugin.getDependencies().size() > 0) {
             List<URL> urls = new ArrayList<URL>();
 
@@ -113,11 +113,12 @@ public class OPlatform {
         }
 
         Class<?> cl = null;
+        OPlugin p = null;
 
         try {
             cl = Class.forName(plugin.mainClass, false, plugin.classLoader);
             if (OPlugin.class.isAssignableFrom(cl)) {
-                OPlugin p = (OPlugin) cl.newInstance();
+                p = (OPlugin) cl.newInstance();
                 p.platform = this;
                 p.infos = plugin;
                 p.onCreate();
@@ -131,6 +132,7 @@ public class OPlatform {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+        return p;
     }
 
     public Map<String, OPluginProperty> getPlugins() {

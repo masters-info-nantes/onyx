@@ -1,9 +1,8 @@
 package com.onyx.emulator;
 
+import com.onyx.gui.OGui;
 import com.onyx.platform.OPlugin;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import com.onyx.platform.OPluginProperty;
 
 /**
  * Created by Maxime on 05/02/15.
@@ -17,7 +16,9 @@ public class OEmulator extends OPlugin{
     @Override
     protected void onCreate() {
         this.getPlatform().getPrimaryStage().setTitle("Onyx - Emulator");
-        EmulatorUI ui = new EmulatorUI();
+        OPluginProperty p = this.getPlatform().getPlugin("com.onyx.gui");
+        OGui guiPlugin = (OGui) this.getPlatform().runPlugin(p);
+        EmulatorUI ui = new EmulatorUI(guiPlugin.getMainPane());
         this.getPlatform().getPrimaryStage().setScene(ui.getScene());
         this.getPlatform().getPrimaryStage().show();
     }

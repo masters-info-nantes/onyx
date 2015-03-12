@@ -1,14 +1,19 @@
 package com.onyx.emulator;
 
+import java.io.IOException;
+
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-
-import java.io.IOException;
 
 /**
  * Created by Maxime on 04/03/15.
@@ -22,7 +27,7 @@ public class EmulatorUI {
     private ImageView background;
     private Pane pane;
 
-    public EmulatorUI() {
+    public EmulatorUI(Pane pane) {
         Image img = null;
         try {
             img = new Image(getClass().getClassLoader().getResource("nexus5.png").openStream());
@@ -31,7 +36,7 @@ public class EmulatorUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        this.pane = pane;
         pane = new Pane();
         pane.setLayoutX(47);
         pane.setLayoutY(95);
@@ -41,7 +46,6 @@ public class EmulatorUI {
         pane.setMaxHeight(594);
         pane.setMinHeight(594);
         pane.setPrefHeight(594);
-        pane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
         root.getChildren().add(background);
         root.getChildren().add(pane);
     }
@@ -49,5 +53,9 @@ public class EmulatorUI {
 
     public Scene getScene() {
         return scene;
+    }
+    
+    public Pane getPane(){
+    	return pane;
     }
 }
