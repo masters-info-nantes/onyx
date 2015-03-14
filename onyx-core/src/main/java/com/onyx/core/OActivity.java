@@ -5,6 +5,6 @@ package com.onyx.core;
  */
 public abstract class OActivity {
 
-    protected abstract void onCreate();
+    public abstract void onCreate();
 
 }

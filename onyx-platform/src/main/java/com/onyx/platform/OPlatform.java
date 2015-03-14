@@ -14,6 +14,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.*;
@@ -26,6 +28,9 @@ public class OPlatform {
     private static final Logger logger = LogManager.getLogger(OPlatform.class);
 
     private Map<String, OPluginProperty> plugins = new HashMap<String, OPluginProperty>();
+    private Map<String, List> services = new HashMap<String, List>();
+    private Map<String, Class> servicesAvailable = new HashMap<String, Class>();
+    public URLClassLoader classLoader;
     Stage primaryStage;
 
     public OPlatform() {
@@ -80,6 +85,19 @@ public class OPlatform {
         File dirContent = new File("target/plugins");
         System.out.println(dirContent.getAbsolutePath());
         File[] files = dirContent.listFiles();
+
+        List<URL> urls = new ArrayList<URL>();//TODO
+        for(File f : files) {
+            try {
+                urls.add(f.toURL());
+                System.out.println(f.getAbsolutePath());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        URL UrlsArray[] = new URL[urls.size()];
+        urls.toArray(UrlsArray);
+        classLoader = URLClassLoader.newInstance(UrlsArray, this.getClass().getClassLoader());//TODO
         for (File file : files) {
             String extension = "";
             int i = file.getName().lastIndexOf('.');
@@ -95,6 +113,11 @@ public class OPlatform {
             }
         }
         updateAllDependencies();
+        try {
+            updateAllServices();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<URL> getDependenciesURL(OPluginProperty plugin) {
@@ -107,20 +130,109 @@ public class OPlatform {
     }
 
     public void updateAllDependencies() {
-        Map<String, Boolean> classPathUpdated = new HashMap<String, Boolean>();
         for(OPluginProperty pluginProperty : this.plugins.values()) {
             pluginProperty.updateDependencies(this);
-            classPathUpdated.put(pluginProperty.id, false);
+            pluginProperty.classLoader = classLoader;//TODO
+            System.out.println(pluginProperty.classLoader);
         }
-        for(OPluginProperty plugin : this.plugins.values()) {
-            System.out.println("plugin dep :" + plugin.getId());
+        /*for(OPluginProperty plugin : this.plugins.values()) {
             List<URL> urls = getDependenciesURL(plugin);
-            for(URL url : urls) {
-                System.out.println("  " + url.getFile());
-            }
             URL UrlsArray[] = new URL[urls.size()];
             UrlsArray = urls.toArray(UrlsArray);
             plugin.classLoader = URLClassLoader.newInstance(UrlsArray, this.getClass().getClassLoader());
+        }*/
+
+    }
+
+    public void updateAllServices() throws IllegalAccessException {
+        Map<String, Boolean> added = new HashMap<String, Boolean>();
+        for(OPluginProperty pluginProperty : this.plugins.values()) {
+            added.put(pluginProperty.id, false);
+        }
+        for(OPluginProperty pluginProperty : this.plugins.values()) {
+            if(added.get(pluginProperty.id).booleanValue() == false) {
+                for(OPluginProperty dependency : pluginProperty.dependencies) {
+                    if(added.get(dependency.id).booleanValue() == false) {
+                        updateServices(dependency);
+                        added.put(dependency.id, true);
+                    }
+                }
+                updateServices(pluginProperty);
+                added.put(pluginProperty.id, true);
+            }
+        }
+    }
+
+    private void updateServices(OPluginProperty pluginProperty) throws IllegalAccessException {
+        Element servicesXml = (Element)pluginProperty.document.getElementsByTagName("services").item(0);
+        if(servicesXml != null) {
+            NodeList dependenciesList = servicesXml.getElementsByTagName("service");
+            for(int i=0; i<dependenciesList.getLength(); i++) {
+                String serviceClass = ((Element)dependenciesList.item(i)).getTextContent();
+                Class<?> cl = null;
+                try {
+                    System.out.println("->:" + serviceClass);
+                    cl = Class.forName(serviceClass, false, pluginProperty.classLoader);
+                    System.out.println(OService.class.getName());
+                    if (cl.isAnnotationPresent(OService.class)) {
+                        OService service = cl.getAnnotation(OService.class);
+                        if(!servicesAvailable.containsKey(service.name())) {
+                            servicesAvailable.put(service.name(), cl);
+                            services.put(service.name(), new ArrayList<Object>());
+                        } else {
+                            throw new IllegalAccessException("this service already exist");
+                        }
+                    } else {
+                        throw new IllegalAccessException("Class must have the OService annotation");
+                    }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        for(Map.Entry<String, Class> newService : servicesAvailable.entrySet()) {
+            NodeList allnew = pluginProperty.document.getElementsByTagName(newService.getKey());
+            for(int i = 0; i<allnew.getLength(); i++) {
+                Element e = (Element)allnew.item(i);
+                Object service = null;
+                try {
+                    service = newService.getValue().newInstance();
+                } catch (InstantiationException e1) {
+                    e1.printStackTrace();
+                }
+                if (service != null) {
+                    for(Field field : newService.getValue().getFields()) {
+                        if(field.isAnnotationPresent(OServiceValue.class)){
+                            OServiceValue value = field.getAnnotation(OServiceValue.class);
+                            String v = null;
+                            try {
+                                v = e.getElementsByTagName(value.name()).item(0).getTextContent();
+                            } catch (Exception e2) {
+                                if(value.required())
+                                    throw new IllegalAccessException("the value "+value.name()+" is required");
+                            }
+                            if(v != null) {
+                                if (field.getType() == Integer.class) {
+                                    field.setInt(service, Integer.valueOf(v));
+                                } else if (field.getType() == String.class) {
+                                    field.set(service, v);
+                                } else if (field.getType() == Class.class) {
+                                    try {
+                                        Class cl = Class.forName(v, false, pluginProperty.classLoader);
+                                        field.set(service, cl);
+                                    } catch (ClassNotFoundException e1) {
+                                        e1.printStackTrace();
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    services.get(newService.getKey()).add(service);
+                }
+            }
         }
     }
 
@@ -170,6 +282,10 @@ public class OPlatform {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public List<Object> getServices(String name) {
+        return services.get(name);
     }
 
 }

@@ -7,7 +7,7 @@ import com.onyx.core.OActivity;
  */
 public class OWebBrowser extends OActivity {
     @Override
-    protected void onCreate() {
+    public void onCreate() {
         System.out.println("run Browser");
     }
 }

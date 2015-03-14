@@ -9,6 +9,6 @@ import com.onyx.platform.OServiceValue;
 @OService(name = "application")
 public class OApp {
 
-    @OServiceValue
-    Class mainActivity;
+    @OServiceValue(name = "mainActivity")
+    public Class mainActivity;
 }

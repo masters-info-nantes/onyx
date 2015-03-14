@@ -8,7 +8,7 @@ import com.onyx.core.OActivity;
 public class OLauncher extends OActivity {
 
     @Override
-    protected void onCreate() {
+    public void onCreate() {
         System.out.println("run launcher");
     }
 }
