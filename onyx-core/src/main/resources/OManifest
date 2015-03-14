@@ -6,7 +6,7 @@
     <description>Core of onyx</description>
     <mainClass>com.onyx.core.OCore</mainClass>
 
-    <new>
+    <services>
         <service>com.onyx.core.OApp</service>
-    </new>
+    </services>
 </manifest>
