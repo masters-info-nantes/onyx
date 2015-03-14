@@ -37,7 +37,6 @@ public class EmulatorUI {
             e.printStackTrace();
         }
         this.pane = pane;
-        pane = new Pane();
         pane.setLayoutX(47);
         pane.setLayoutY(95);
         pane.setMaxWidth(334);

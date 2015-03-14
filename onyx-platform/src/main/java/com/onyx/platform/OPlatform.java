@@ -1,6 +1,7 @@
 package com.onyx.platform;
 
 
+import com.onyx.platform.errors.OPluginNotRunnableException;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +43,7 @@ public class OPlatform {
         }
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder =null;
+        DocumentBuilder documentBuilder = null;
         Document document = null;
 
         try {
@@ -66,7 +67,11 @@ public class OPlatform {
                 System.out.println("Load plugin: "+xmlPluginsElements.item(i).getTextContent());
                 OPluginProperty tempInfo = getPlugin(xmlPluginsElements.item(i).getTextContent());
                 System.out.println("Plugin infos: "+ tempInfo.getName());
-                runPlugin(tempInfo);
+                try {
+                    runPlugin(tempInfo);
+                } catch (OPluginNotRunnableException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -89,8 +94,33 @@ public class OPlatform {
                 }
             }
         }
+        updateAllDependencies();
+    }
+
+    public List<URL> getDependenciesURL(OPluginProperty plugin) {
+        List<URL> urls = new ArrayList<URL>();
+        urls.add(plugin.url);
+        for(OPluginProperty dependency : plugin.dependencies) {
+            urls.addAll(getDependenciesURL(dependency));
+        }
+        return urls;
+    }
+
+    public void updateAllDependencies() {
+        Map<String, Boolean> classPathUpdated = new HashMap<String, Boolean>();
         for(OPluginProperty pluginProperty : this.plugins.values()) {
             pluginProperty.updateDependencies(this);
+            classPathUpdated.put(pluginProperty.id, false);
+        }
+        for(OPluginProperty plugin : this.plugins.values()) {
+            System.out.println("plugin dep :" + plugin.getId());
+            List<URL> urls = getDependenciesURL(plugin);
+            for(URL url : urls) {
+                System.out.println("  " + url.getFile());
+            }
+            URL UrlsArray[] = new URL[urls.size()];
+            UrlsArray = urls.toArray(UrlsArray);
+            plugin.classLoader = URLClassLoader.newInstance(UrlsArray, this.getClass().getClassLoader());
         }
     }
 
@@ -99,24 +129,19 @@ public class OPlatform {
         plugins.put(pluginProperty.getId(),pluginProperty);
     }
 
-    public OPlugin runPlugin(OPluginProperty plugin) {
-        if(plugin.getDependencies().size() > 0) {
-            List<URL> urls = new ArrayList<URL>();
+    OPlugin runPlugin(OPluginProperty plugin) throws OPluginNotRunnableException {
+        return runPlugin(plugin, plugin.classLoader);
+    }
 
-            for(OPluginProperty pluginProperty : plugin.getDependencies()) {
-                //runPlugin(pluginProperty);
-                urls.add(pluginProperty.url);
-            }
-            URL UrlsArray[] = new URL[urls.size()];
-            UrlsArray = urls.toArray(UrlsArray);
-            plugin.classLoader = URLClassLoader.newInstance(UrlsArray, plugin.classLoader);
-        }
+    OPlugin runPlugin(OPluginProperty plugin, URLClassLoader classLoader) throws OPluginNotRunnableException {
+        if(plugin.mainClass == null)
+            throw new OPluginNotRunnableException();
 
         Class<?> cl = null;
         OPlugin p = null;
 
         try {
-            cl = Class.forName(plugin.mainClass, false, plugin.classLoader);
+            cl = Class.forName(plugin.mainClass, false, classLoader);
             if (OPlugin.class.isAssignableFrom(cl)) {
                 p = (OPlugin) cl.newInstance();
                 p.platform = this;

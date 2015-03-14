@@ -29,7 +29,7 @@
                 <executions>
                     <execution>
                         <id>copy-plugins</id>
-                        <phase>install</phase>
+                        <phase>validate</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
@@ -53,18 +53,6 @@
                                     <version>${project.version}</version>
                                     <type>${project.packaging}</type>
                                 </artifactItem>
-                            </artifactItems>
-                            <outputDirectory>${project.build.directory}/plugins</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-apps</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
                                 <artifactItem>
                                     <groupId>${project.groupId}</groupId>
                                     <artifactId>onyx-app-web-browser</artifactId>
@@ -78,7 +66,7 @@
                                     <type>${project.packaging}</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${project.build.directory}/apps</outputDirectory>
+                            <outputDirectory>${project.build.directory}/plugins</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -98,6 +86,9 @@
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
+                                    <includes>
+                                        <include>default-plugins.xml</include>
+                                    </includes>
                                     <filtering>true</filtering>
                                 </resource>
                             </resources>

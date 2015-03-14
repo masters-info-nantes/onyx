@@ -26,7 +26,7 @@ public class OPluginProperty {
     String version;
     String name;
     String description;
-    String mainClass;
+    String mainClass = null;
     Document document;
 
     URL url;
@@ -60,7 +60,9 @@ public class OPluginProperty {
         plugin.name = document.getElementsByTagName("name").item(0).getTextContent();
         plugin.description = document.getElementsByTagName("description").item(0).getTextContent();
         plugin.classLoader = classLoader;
-        plugin.mainClass = document.getElementsByTagName("mainClass").item(0).getTextContent();
+        try {
+            plugin.mainClass = document.getElementsByTagName("mainClass").item(0).getTextContent();
+        } catch (Exception e){}
         plugin.url = url;
         return plugin;
     }

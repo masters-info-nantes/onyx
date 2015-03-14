@@ -12,4 +12,9 @@ public class OCore extends OPlugin {
         System.out.println("Chargement du core");
     }
 
+    @Override
+    protected void onStop() {
+
+    }
+
 }

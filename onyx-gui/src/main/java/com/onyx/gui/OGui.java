@@ -25,7 +25,12 @@ public class OGui extends OPlugin {
         
     
     }
-    
+
+    @Override
+    protected void onStop() {
+
+    }
+
     public Pane getMainPane(){
     	return mainPane;
     }
