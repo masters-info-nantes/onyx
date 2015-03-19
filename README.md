@@ -26,8 +26,8 @@ This is the file settings.xml after the modification with the proxy of the unive
 
 Then you do the command "cd 'way to your folder'" to place you in the folder where you cloned the project.
 Type the command "mvn clean install -Dmdep.skip=true".
+In order to put all plugins in the platform, you have to type: "./mv_jars"
 
 Then type "cd onyx-platform/"
-Then do an install with "mvn clean install"
 
 To run it type "mvn exec:java"
