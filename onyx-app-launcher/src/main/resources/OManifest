@@ -7,5 +7,7 @@
 
     <application>
         <mainActivity>com.onyx.launcher.OLauncher</mainActivity>
+        <name>Launcher</name>
+        <id>com.onyx.launcher.app</id>
     </application>
 </manifest>

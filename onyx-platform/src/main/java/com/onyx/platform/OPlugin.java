@@ -18,9 +18,9 @@ public abstract class OPlugin {
         this.platform = platform;
     }
 
-    protected abstract void onCreate();
+    public abstract void onCreate();
 
-    protected abstract void onStop();
+    public abstract void onStop();
 
     public OPlatform getPlatform() {
         return platform;

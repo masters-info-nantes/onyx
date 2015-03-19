@@ -7,6 +7,6 @@
     <mainClass>com.onyx.core.OCore</mainClass>
 
     <services>
-        <service>com.onyx.core.OApp</service>
+        <service>com.onyx.core.OAppProperty</service>
     </services>
 </manifest>
