@@ -2,6 +2,7 @@
 
 files=`find . | grep './target.*\.jar' | grep -v "onyx-platform"`
 
+mkdir "./onyx-platform/target/plugins/";
 for f in $files
 do
 	echo $f;
