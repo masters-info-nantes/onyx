@@ -5,11 +5,4 @@
     <name>Core</name>
     <description>Core of onyx</description>
     <mainClass>com.onyx.gui.OGui</mainClass>
-
-    <dependencies>
-        <dependency>
-            <id>com.onyx.core</id>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
 </manifest>

@@ -2,18 +2,11 @@ package com.onyx.emulator;
 
 import java.io.IOException;
 
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 /**
  * Created by Maxime on 04/03/15.
@@ -22,6 +15,7 @@ public class EmulatorUI {
 
 
     private Group root = new Group();
+    
     private Scene scene = new Scene(root, 428, 800);
 
     private ImageView background;

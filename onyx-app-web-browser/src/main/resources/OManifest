@@ -7,5 +7,7 @@
 
     <application>
         <mainActivity>com.onyx.webbrowser.OWebBrowser</mainActivity>
+        <name>Web Browser</name>
+        <id>com.onyx.webbrowser.app</id>
     </application>
 </manifest>
