@@ -1,0 +1,9 @@
+#!/bin/bash
+
+files=`find . | grep './target.*\.jar' | grep -v "onyx-platform"`
+
+for f in $files
+do
+	echo $f;
+	mv $f ./onyx-platform/target/plugins/
+done
