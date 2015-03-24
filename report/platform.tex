@@ -1,14 +1,14 @@
 \subsection{Présentation}
 
 Onyx est une plateforme à plugins généraliste, ce qui veut dire que la plateforme seule n'a aucun comportement mais qu'en ajoutant des plugins respectants les interfaces fournies on peut créer n'importe quelle application et comportement.
-
-m
+\\
+\\
 On peut utiliser la plateforme de deux manières:
 
 
 \subsubsection{Lancement par défaut}
 
-Lorsqu'on lance la plateforme sans aucun paramètres, la plateforme va automatiquement charger les plugins référencés dans le fichier "default-plugins.xml"
+Lorsqu'on lance la plateforme sans aucun paramètres, elle va automatiquement charger les plugins référencés dans le fichier "default-plugins.xml"
 
 \subsubsection{Lancement par commandes}
 
@@ -17,12 +17,8 @@ TO DO
 \subsection{Structure}
 
 \subsubsection{Diagramme de classe}
-\includegraphics[width=10cm]{figures/class_diagram.png}
-
-\subsection{Plugins}
-
-\subsubsection{Création d'un nouveau plugin}
-
+\includegraphics[width=15cm]{figures/class_diagram.png}
+\newpage
 \subsection{Installation}
 
 Tout d’abord, dans un terminal, tapez:
@@ -59,4 +55,88 @@ mvn clean install
 Pour lancer l'execution par défaut, tapez:
 \begin{verbatim}
 mvn exec:java-X
+\end{verbatim}
+
+\newpage
+\subsection{Plugins}
+
+\subsubsection{Création d'un nouveau plugin}
+
+Un plugin pour être intégré à la plateforme doit, comme vous vous en doutez, implémenter l'interface OPlugin comme ci-dessous:
+\begin{verbatim}
+package com.onyx.myPlugin;
+
+import com.onyx.platform.OPlugin;
+import com.onyx.platform.OPluginProperty;
+
+public class myMainClass extends OPlugin{
+
+    public myMainClass() {
+        //Add some code here
+    }
+
+    @Override
+    public void onCreate() {
+        //Add some code here
+    }
+
+    @Override
+    public void onStop() {
+        //Add some code here
+    }
+
+}
+\end{verbatim}
+
+Pour que votre plugin soit correctement reconnu par la plateforme, vous devez lui fournir un fichier Omanifest sous cette forme:
+
+\begin{verbatim}
+<?xml version="1.0"?>
+<manifest>
+    <id>com.onyx.myPlugin</id>
+    <version>0.1</version>
+    <name>myPlugin</name>
+    <descriptionplugin for onyx</description>
+    <mainClass>com.onyx.myPlugin.myMainClass</mainClass>
+    /* les dépendences ne sont pas obligatoires */
+    <dependencies>
+        <dependency>
+            <id>com.onyx.core</id>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</manifest>
+\end{verbatim}
+
+Pour ceux qui voudraient se faciliter la vie et utiliser maven pour compiler leurs plugins, voilà un fichier pom.xml basique:
+
+\begin{verbatim}
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>onyx</artifactId>
+        <groupId>com.onyx</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>myPlugin</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>onyx-platform</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>onyx-core</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+</project>
 \end{verbatim}
