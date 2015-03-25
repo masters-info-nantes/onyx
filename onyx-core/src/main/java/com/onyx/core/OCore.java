@@ -12,7 +12,8 @@ import java.util.List;
  */
 public class OCore extends OPlugin {
 
-	private OActivity currentApplication;
+	private OActivity currentActivity;
+	private OAppProperty currentApp;
 	private OGui gui;
 
 	@Override
@@ -39,24 +40,29 @@ public class OCore extends OPlugin {
 		for (Object obj : apps) {
 			OAppProperty app = (OAppProperty) obj;
 			if(app.id.equals(name)) {
-				OActivity activity = null;
-				try {
-					activity = (OActivity) app.mainActivity.newInstance();
-				} catch (InstantiationException | IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if(currentApplication != null){
-					currentApplication.onStop();
-				}
-				currentApplication = activity;
-				activity.onCreate();
-				gui.setPaneApplication(activity.getApplicationPane());
+				currentApp = app;
+				setActivity(app.mainActivity);
 			}
 		}
 
+	}
 
-
+	public void setActivity(Class className){
+				OActivity activity = null;
+				try {
+					activity = (OActivity) className.newInstance();
+					activity.platform = this.getPlatform();
+					activity.core = this;
+					currentActivity = activity;
+				} catch (InstantiationException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+				if(currentActivity != null){
+					currentActivity.onStop();
+				}
+				currentActivity = activity;
+				activity.onCreate();
+				gui.setPaneApplication(activity.getApplicationPane());
 
 	}
 
