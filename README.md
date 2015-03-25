@@ -31,4 +31,6 @@ In order to put all plugins in the platform, you have to type: "./mv_jars"
 
 Then type "cd onyx-platform/"
 
-To run it type "mvn exec:java"
+To run it type "mvn exec:java -X" (run platform with all defaults plugins)
+
+To run it type "mvn exec:java -X -Dexec.args="--help" (run platform with command, all command start with --)
