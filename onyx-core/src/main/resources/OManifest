@@ -9,4 +9,9 @@
     <services>
         <service>com.onyx.core.OAppProperty</service>
     </services>
+    <command>
+        <name>Generate empty application</name>
+        <id>generateApplication</id>
+        <commandClass>com.onyx.core.command.GenerateEmptyApplicationCommand</commandClass>
+    </command>
 </manifest>

@@ -2,18 +2,20 @@ package com.onyx.platform.commands;
 
 import com.onyx.platform.OPlatform;
 
+import java.util.List;
+
 /**
  * Created by Maxime on 09/03/15.
  */
-public class ListPluginCommand {
-
-    public void listPlugins(OPlatform platform)
+public class ListPluginCommand extends OCommand{
+    @Override
+    public void run(List<String> params)
     {
         System.out.println("Liste des plugins disponibles:");
-        for(String key : platform.getPlugins().keySet())
+        for(String key : getPlatform().getPlugins().keySet())
         {
-            System.out.println("Plugin: "+ platform.getPlugin(key).getName());
-            System.out.println("Description: "+ platform.getPlugin(key).getDescription()+"\n");
+            System.out.println("Plugin: "+ getPlatform().getPlugin(key).getName());
+            System.out.println("Description: "+ getPlatform().getPlugin(key).getDescription()+"\n");
         }
     }
 

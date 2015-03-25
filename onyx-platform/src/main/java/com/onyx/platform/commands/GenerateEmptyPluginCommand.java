@@ -4,14 +4,15 @@ import com.onyx.platform.OPluginProperty;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Scanner;
 
 /**
  * Created by Maxime on 09/03/15.
  */
-public class GenerateEmptyPluginCommand {
-
-    public void generateEmptyPlugin()
+public class GenerateEmptyPluginCommand extends OCommand {
+    @Override
+    public void run(List<String> params)
     {
 
         //OPluginProperty newPlugin = new OPluginProperty();

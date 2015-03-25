@@ -20,12 +20,10 @@ public class Main extends Application {
         platform = new OPlatform();
         platform.primaryStage = primaryStage;
         if(this.getParameters().getRaw().size() > 0) {
-            OCommandManager commandManager = new OCommandManager(platform);
-            commandManager.run(this.getParameters().getRaw());
+            platform.runCommandManager(this.getParameters().getRaw());
         } else {
             platform.loadDefaultPlugins();
         }
-        this.primaryStage = primaryStage;
     }
 
 }

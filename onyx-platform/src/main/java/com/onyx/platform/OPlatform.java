@@ -1,6 +1,10 @@
 package com.onyx.platform;
 
 
+import com.onyx.platform.commands.GenerateEmptyPluginCommand;
+import com.onyx.platform.commands.HelpCommand;
+import com.onyx.platform.commands.ListPluginCommand;
+import com.onyx.platform.commands.OCommandManager;
 import com.onyx.platform.errors.OPluginNotRunnableException;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +17,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,14 +31,23 @@ public class OPlatform {
     private static final Logger logger = LogManager.getLogger(OPlatform.class);
 
     private Map<String, OPluginProperty> plugins = new HashMap<String, OPluginProperty>();
-    private Map<String, List> services = new HashMap<String, List>();
-    private Map<String, Class> servicesAvailable = new HashMap<String, Class>();
+    Map<String, List> services = new HashMap<String, List>();
+    Map<String, Class> servicesAvailable = new HashMap<String, Class>();
     public URLClassLoader classLoader;
     Stage primaryStage;
+    private OCommandManager commandManager;
 
     public OPlatform() {
         logger.info("Lancement de la plateforme");
+        commandManager = new OCommandManager(this);
+        commandManager.addDefaultCommand("Help", "help", "", HelpCommand.class);
+        commandManager.addDefaultCommand("List all plugins", "pluginList", "", ListPluginCommand.class);
+        commandManager.addDefaultCommand("Generate empty plugin", "generatePlugin", "", GenerateEmptyPluginCommand.class);
         scanPluginDirectory();
+    }
+
+    public void runCommandManager(List<String> params) {
+        commandManager.run(params);
     }
 
     public void loadDefaultPlugins()
@@ -163,6 +175,37 @@ public class OPlatform {
         }
     }
 
+    public void addNewServiceAvailable(Class<?> cl) throws IllegalAccessException {
+        if (cl.isAnnotationPresent(OService.class)) {
+            OService service = cl.getAnnotation(OService.class);
+            if(!servicesAvailable.containsKey(service.name())) {
+                servicesAvailable.put(service.name(), cl);
+                services.put(service.name(), new ArrayList<Object>());
+            } else {
+                throw new IllegalAccessException("this service already exist");
+            }
+        } else {
+            throw new IllegalAccessException("Class must have the OService annotation");
+        }
+    }
+
+    public void addNewService(Class<?> cl, Object classProperty) throws IllegalAccessException {
+        if(classProperty.getClass() == cl) {
+            if (cl.isAnnotationPresent(OService.class)) {
+                OService service = cl.getAnnotation(OService.class);
+                if(servicesAvailable.containsKey(service.name())) {
+                    services.get(service.name()).add(classProperty);
+                } else {
+                    throw new IllegalAccessException("this serviceType not exist");
+                }
+            } else {
+                throw new IllegalAccessException("Class must have the OService annotation");
+            }
+        } else {
+            throw new IllegalAccessException("this objectproperty is not instance of the service class");
+        }
+    }
+
     private void updateServices(OPluginProperty pluginProperty) throws IllegalAccessException {
         Element servicesXml = (Element)pluginProperty.document.getElementsByTagName("services").item(0);
         if(servicesXml != null) {
@@ -171,20 +214,8 @@ public class OPlatform {
                 String serviceClass = ((Element)dependenciesList.item(i)).getTextContent();
                 Class<?> cl = null;
                 try {
-                    System.out.println("->:" + serviceClass);
                     cl = Class.forName(serviceClass, false, pluginProperty.classLoader);
-                    System.out.println(OService.class.getName());
-                    if (cl.isAnnotationPresent(OService.class)) {
-                        OService service = cl.getAnnotation(OService.class);
-                        if(!servicesAvailable.containsKey(service.name())) {
-                            servicesAvailable.put(service.name(), cl);
-                            services.put(service.name(), new ArrayList<Object>());
-                        } else {
-                            throw new IllegalAccessException("this service already exist");
-                        }
-                    } else {
-                        throw new IllegalAccessException("Class must have the OService annotation");
-                    }
+                    addNewServiceAvailable(cl);
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
