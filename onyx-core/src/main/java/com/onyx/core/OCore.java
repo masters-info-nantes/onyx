@@ -16,6 +16,8 @@ public class OCore extends OPlugin {
 	private OAppProperty currentApp;
 	private OGui gui;
 
+	public static String LAUNCHER_APP = "com.onyx.launcher.app";
+
 	@Override
 	public void onCreate() {
 		System.out.println("Chargement du core");
@@ -26,7 +28,7 @@ public class OCore extends OPlugin {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        setApplication("com.onyx.webbrowser.app");
+        setApplication(LAUNCHER_APP);
 	}
 
 	@Override
@@ -40,6 +42,9 @@ public class OCore extends OPlugin {
 		for (Object obj : apps) {
 			OAppProperty app = (OAppProperty) obj;
 			if(app.id.equals(name)) {
+				if(currentActivity != null){
+					currentActivity.onStop();
+				}
 				currentApp = app;
 				currentActivity = null;
 				setActivity(app.mainActivity);
@@ -49,18 +54,17 @@ public class OCore extends OPlugin {
 	}
 
 	public void setActivity(Class className){
+				if(currentActivity != null){
+					currentActivity.onStop();
+				}
 				OActivity activity = null;
 				try {
 					activity = (OActivity) className.newInstance();
 					activity.platform = this.getPlatform();
 					activity.core = this;
 					activity.parent = currentActivity;
-					currentActivity = activity;
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
-				}
-				if(currentActivity != null){
-					currentActivity.onStop();
 				}
 				currentActivity = activity;
 				activity.onCreate();
