@@ -23,6 +23,20 @@ import com.onyx.core.OCore;
 public class OLauncher extends OActivity {
 	private static final Image ICON_48 = new Image("file:icon-68x68.png");
 	private OCore core = null;
+
+    private class EventHandlerRunApp implements EventHandler<Event> {
+
+        OAppProperty oAppProperty;
+
+        public EventHandlerRunApp(OAppProperty oAppProperty) {
+            this.oAppProperty = oAppProperty;
+        }
+
+        @Override
+        public void handle(Event event) {
+            core.setApplication(oAppProperty.id);
+        }
+    }
 	
 	private Pane createContent(final List<Object> apps){
         
@@ -34,31 +48,20 @@ public class OLauncher extends OActivity {
         
         
         for (int j = 0; j < apps.size(); j++) {
-            //Image = app[i].getOnyxIcon()
-        	//buttons[j] = new Button(app[j].getName(), new ImageView(app[j].getIcon());
-        	appsButton[j] = new Button();
-        	((Labeled) appsButton[j]).setGraphic(new ImageView(ICON_48));
-        	((Node) appsButton[j]).setTranslateX(35);
-            //buttons[j].setPadding(new Insets(15));
-        	((Node) appsButton[j]).setOnMouseClicked(new EventHandler<Event>() {
-
-				@Override
-				public void handle(Event event) {
-					//System.out.println("Lancement de l'application : "+((OAppProperty)apps.get(j)).id );
-					
-					System.out.println();
-					core.setApplication(((OAppProperty)apps.get(0)).id);
-					
-				}
-            	
-			});
-            tilePane.getChildren().add((Node) appsButton[j]);
+            OAppProperty app  = (OAppProperty)apps.get(j);
+            if(!app.id.equals(OCore.LAUNCHER_APP)) {
+                //Image = app[i].getOnyxIcon()
+                //buttons[j] = new Button(app[j].getName(), new ImageView(app[j].getIcon());
+                appsButton[j] = new Button();
+                ((Labeled) appsButton[j]).setGraphic(new ImageView(ICON_48));
+                ((Node) appsButton[j]).setTranslateX(35);
+                //buttons[j].setPadding(new Insets(15));
+                ((Node) appsButton[j]).setOnMouseClicked(new EventHandlerRunApp((OAppProperty)apps.get(j)));
+                tilePane.getChildren().add((Node) appsButton[j]);
+            }
         }
 		return tilePane;
-        
-		
-		
-	
+
 	}
 	
 	
@@ -68,13 +71,6 @@ public class OLauncher extends OActivity {
         System.out.println("run launcher");
         core = this.getCore();
         List<Object> apps = getPlatform().getServices("application");
-        for(Object app : apps) {
-            System.out.println("youpi ! "+((OAppProperty)app).id );
-            // run app
-            //this.getCore().setApplication(((OAppProperty)app).id);
-            // run another activity in same app
-            //this.getCore().setActivity(OLauncher.class);
-        }
         System.out.println("Creation de l'interface");
         getPane().getChildren().add(createContent(apps));
         

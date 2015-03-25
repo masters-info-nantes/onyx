@@ -31,7 +31,7 @@ public abstract class OActivity {
         if(parent != null)
             getCore().setApplication(parent.property.id);
         else
-            getCore().setApplication("com.onyx.webbrowser.app");
+            getCore().setApplication(OCore.LAUNCHER_APP);
     }
     
     protected Pane getPane(){
