@@ -1,15 +1,15 @@
-\subsection{Présentation}
+\section{Présentation}
 L'application se présente comme un système d'exploitation mobile simplifié fonctionnant grâce à quelques modules de base comme le core, l'interface graphique, un émulateur, tous étant remplaceables très facilement car ce sont en réalité des plugins branchés sur la plateforme Onyx avec plus ou moins de dépendances les uns entre les autres.
 
-\subsection{Structure}
+\section{Structure}
 
-\subsubsection{Diagramme de classes}
+\subsection{Diagramme de classes}
 \includegraphics[width=20cm]{figures/class_diagram_app.png}
 
-\subsection{Créer une application}
+\section{Créer une application}
 
-mainActivity.java
-
+Voici les fichiers et leurs contenu basique pour créer des plugins.
+\subsubsection{mainActivity.java}
 \begin{verbatim}
 package com.onyx.myapppackage;
 import com.onyx.core.OActivity;
@@ -23,7 +23,8 @@ public class OWebBrowser extends OActivity {
 }
 \end{verbatim}
 
-OManifest
+\subsection{OManifest}
+
 
 \begin{verbatim}
 <?xml version="1.0"?>
@@ -41,8 +42,9 @@ OManifest
 </manifest>
 \end{verbatim}
 
-pom.xml
 
+\subsection{pom.xml}
+\begin{verbatim}
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -65,3 +67,4 @@ pom.xml
         </dependency>
     </dependencies>
 </project>
+\end{verbatim}
