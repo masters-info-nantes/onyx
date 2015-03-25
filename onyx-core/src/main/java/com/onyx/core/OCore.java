@@ -41,6 +41,7 @@ public class OCore extends OPlugin {
 			OAppProperty app = (OAppProperty) obj;
 			if(app.id.equals(name)) {
 				currentApp = app;
+				currentActivity = null;
 				setActivity(app.mainActivity);
 			}
 		}
@@ -53,6 +54,7 @@ public class OCore extends OPlugin {
 					activity = (OActivity) className.newInstance();
 					activity.platform = this.getPlatform();
 					activity.core = this;
+					activity.parent = currentActivity;
 					currentActivity = activity;
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
