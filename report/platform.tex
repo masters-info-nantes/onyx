@@ -12,7 +12,16 @@ Lorsqu'on lance la plateforme sans aucun paramètres, elle va automatiquement ch
 
 \subsection{Lancement par commandes}
 
-TO DO
+Pour lancer des actions spécifiques de la plateforme, vous pouvez passer des commandes à l'execution. Si vous passez par maven, il faut passer les commandes comme ceci: -Dexec.args="--command"
+
+\subsubsection{"--help"}
+La commande help liste toutes les commandes disponibles sur la plateforme, idéal pour commencer à appréhender le fonctionnement de cette dernière.
+
+\subsubsection{"--pluginList"}
+La commande pluginList liste tous les plugins disponibles sur la plateforme.
+
+\subsubsection{"--generatePlugin"}
+La commande generatePlugin permet de générer automatiquement un plugin, lorsque vous la tapez, elle vous affichera alors un menu ou vous rentrerez les infortations relatives à votre plugin.
 
 \section{Structure}
 
@@ -50,6 +59,16 @@ Placez-vous dans le dossier où vous avez cloné le projet.
 Tapez la commande:
 \begin{verbatim}
 mvn clean install
+\end{verbatim}
+
+Pour copier tous les plugins dans la plateforme, tapez:
+\begin{verbatim}
+./mv_jars
+\end{verbatim}
+
+Déplacez-vous ensuite dans le dossier onyx-platform:
+\begin{verbatim}
+cd onyx-platform/
 \end{verbatim}
 
 Pour lancer l'execution par défaut, tapez:
@@ -141,4 +160,31 @@ Pour ceux qui voudraient se faciliter la vie et utiliser maven pour compiler leu
         </dependency>
     </dependencies>
 </project>
+\end{verbatim}
+
+\subsection{Déclaration d'une commande}
+
+Chaque plugin peut apporter son lot de commandes avec lui, pour les définir, il suffit d'ajouter le code suivant dans le manifest:
+
+\begin{verbatim}
+<manifest>
+    ...
+    <command>
+        <name>My Command</name>
+        <id>mycommand</id>
+        <usage>this command do some stuff</usage>
+        <commandClass>com.onyx.myplugin.command.mycommand</commandClass>
+    </command>
+</manifest>
+\end{verbatim}
+
+\subsection{Déclaration d'un service}
+Tout comme les commandes, chaque plugin peut apporter son lot de services avec lui, pour les définir, il suffit d'ajouter le code suivant dans le manifest:
+\begin{verbatim}
+<manifest>
+    ...
+    <services>
+        <service>com.onyx.core.MyService</service>
+    </services>
+</manifest>
 \end{verbatim}
