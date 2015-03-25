@@ -23,6 +23,8 @@ public class OEmulator extends OPlugin{
             OCore core = (OCore) runPlugin(p);
             EmulatorUI ui = new EmulatorUI(core.getGui().getMainPane());
             this.getPlatform().getPrimaryStage().setScene(ui.getScene());
+            core.getGui().setMaxHeight(ui.getHEIGHT());
+            core.getGui().setMaxWidth(ui.getWIDTH());
         } catch (OPluginNotRunnableException e) {
             e.printStackTrace();
         }

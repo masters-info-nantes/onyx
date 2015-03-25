@@ -26,6 +26,11 @@ public class OWebBrowser extends OActivity {
         browser = new WebView();
         webEngine = browser.getEngine();
         webEngine.load("http://google.fr");
+        browser.setMaxWidth(getWidth());
+        browser.setMaxHeight(getHeight());
+        System.out.println(getWidth());
+        System.out.println(getHeight());
+
         getPane().getChildren().add(browser);
     }
 

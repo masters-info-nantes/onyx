@@ -19,6 +19,8 @@ public class OGui extends OPlugin {
 	private Menu hour, network;
 	private Pane centerPane;
 	
+	private int MAX_WIDTH;
+	private int MAX_HEIGHT;
 	
     @Override
     public void onCreate() {
@@ -55,6 +57,27 @@ public class OGui extends OPlugin {
 
 	public void setPaneApplication(Pane activity) {
 		centerPane = activity;
+		mainPane.setMaxHeight(MAX_HEIGHT);
+		mainPane.setMaxWidth(MAX_WIDTH);
         mainPane.setCenter(centerPane);
 	}
+
+	public void setMaxHeight(int height) {
+		this.MAX_HEIGHT = height;
+		
+	}
+
+	public void setMaxWidth(int width) {
+		this.MAX_WIDTH = width;
+	}
+
+	public int getMAX_WIDTH() {
+		return MAX_WIDTH;
+	}
+
+	public int getMAX_HEIGHT() {
+		return MAX_HEIGHT;
+	}
+	
+	
 }

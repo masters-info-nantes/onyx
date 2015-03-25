@@ -20,6 +20,9 @@ public class EmulatorUI {
 
     private ImageView background;
     private Pane pane;
+    
+    private final int WIDTH = 334;
+    private final int HEIGHT = 594;
 
     public EmulatorUI(Pane pane) {
         Image img = null;
@@ -33,12 +36,12 @@ public class EmulatorUI {
         this.pane = pane;
         pane.setLayoutX(47);
         pane.setLayoutY(95);
-        pane.setMaxWidth(334);
-        pane.setMinWidth(334);
-        pane.setPrefWidth(334);
-        pane.setMaxHeight(594);
-        pane.setMinHeight(594);
-        pane.setPrefHeight(594);
+        pane.setMaxWidth(WIDTH);
+        pane.setMinWidth(WIDTH);
+        pane.setPrefWidth(WIDTH);
+        pane.setMaxHeight(HEIGHT);
+        pane.setMinHeight(HEIGHT);
+        pane.setPrefHeight(HEIGHT);
         root.getChildren().add(background);
         root.getChildren().add(pane);
     }
@@ -51,4 +54,16 @@ public class EmulatorUI {
     public Pane getPane(){
     	return pane;
     }
+
+
+	public int getWIDTH() {
+		return WIDTH;
+	}
+
+
+	public int getHEIGHT() {
+		return HEIGHT;
+	}
+    
+    
 }
