@@ -1,4 +1,4 @@
-\subsection{Présentation}
+\section{Présentation}
 
 Onyx est une plateforme à plugins généraliste, ce qui veut dire que la plateforme seule n'a aucun comportement mais qu'en ajoutant des plugins respectants les interfaces fournies on peut créer n'importe quelle application et comportement.
 \\
@@ -6,20 +6,20 @@ Onyx est une plateforme à plugins généraliste, ce qui veut dire que la platef
 On peut utiliser la plateforme de deux manières:
 
 
-\subsubsection{Lancement par défaut}
+\subsection{Lancement par défaut}
 
 Lorsqu'on lance la plateforme sans aucun paramètres, elle va automatiquement charger les plugins référencés dans le fichier "default-plugins.xml"
 
-\subsubsection{Lancement par commandes}
+\subsection{Lancement par commandes}
 
 TO DO
 
-\subsection{Structure}
+\section{Structure}
 
-\subsubsection{Diagramme de classe}
+\subsection{Diagramme de classe}
 \includegraphics[width=15cm]{figures/class_diagram.png}
 \newpage
-\subsection{Installation}
+\section{Installation}
 
 Tout d’abord, dans un terminal, tapez:
 \begin{verbatim}
@@ -58,11 +58,12 @@ mvn exec:java-X
 \end{verbatim}
 
 \newpage
-\subsection{Plugins}
+\section{Plugins}
 
-\subsubsection{Création d'un nouveau plugin}
+\subsection{Création d'un nouveau plugin}
 
 Un plugin pour être intégré à la plateforme doit, comme vous vous en doutez, implémenter l'interface OPlugin comme ci-dessous:
+\subsubsection{myMainClass.java}
 \begin{verbatim}
 package com.onyx.myPlugin;
 
@@ -89,7 +90,8 @@ public class myMainClass extends OPlugin{
 \end{verbatim}
 
 Pour que votre plugin soit correctement reconnu par la plateforme, vous devez lui fournir un fichier Omanifest sous cette forme:
-
+Attention! Si vous définissez des dépendances pour le plugin, vous devez les inclure dans maven
+\subsubsection{Omanifest}
 \begin{verbatim}
 <?xml version="1.0"?>
 <manifest>
@@ -109,7 +111,7 @@ Pour que votre plugin soit correctement reconnu par la plateforme, vous devez lu
 \end{verbatim}
 
 Pour ceux qui voudraient se faciliter la vie et utiliser maven pour compiler leurs plugins, voilà un fichier pom.xml basique:
-
+\subsubsection{pom.xml}
 \begin{verbatim}
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
