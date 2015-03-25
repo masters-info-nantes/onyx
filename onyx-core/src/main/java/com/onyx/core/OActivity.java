@@ -1,5 +1,6 @@
 package com.onyx.core;
 
+import com.onyx.platform.OPlatform;
 import javafx.scene.layout.Pane;
 
 /**
@@ -8,6 +9,10 @@ import javafx.scene.layout.Pane;
 public abstract class OActivity {
 
 	private Pane mainPane;
+    OPlatform platform;
+    OCore core;
+    OActivity parent = null;
+    OAppProperty property;
 	
     public void onCreate(){
     	mainPane = new Pane();
@@ -16,6 +21,13 @@ public abstract class OActivity {
     public void onStop(){
     	
     }
+
+    public void backBtn(){
+        if(parent != null)
+            getCore().setApplication(parent.property.id);
+        else
+            getCore().setApplication("com.onyx.webbrowser.app");
+    }
     
     protected Pane getPane(){
     	return mainPane;
@@ -23,5 +35,13 @@ public abstract class OActivity {
     
     public Pane getApplicationPane(){
     	return mainPane;
+    }
+
+    public OPlatform getPlatform() {
+        return platform;
+    }
+
+    public OCore getCore() {
+        return core;
     }
 }

@@ -1,4 +1,7 @@
 package com.onyx.webbrowser;
+import javafx.geometry.Insets;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import com.onyx.core.OActivity;
@@ -18,6 +21,7 @@ System.out.println("run Browser");
 browser = new WebView();
 webEngine = browser.getEngine();
 webEngine.load("http://google.fr");
+
 getPane().getChildren().add(browser);
 }
 }
