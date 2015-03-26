@@ -25,8 +25,8 @@ public class OWebBrowser extends OActivity {
         System.out.println("run Browser");
         browser = new WebView();
         webEngine = browser.getEngine();
-        webEngine.load("http://google.fr");
         webEngine.setUserAgent("Mozilla/5.0 (Linux; Android 4.1.1; Galaxy Nexus Build/JRO03C) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19");
+        webEngine.load("http://www.google.fr");
         browser.setMaxHeight(536);
         browser.setMaxWidth(334);
 

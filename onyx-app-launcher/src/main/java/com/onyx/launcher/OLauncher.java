@@ -52,9 +52,9 @@ public class OLauncher extends OActivity {
             if(!app.id.equals(OCore.LAUNCHER_APP)) {
                 //Image = app[i].getOnyxIcon()
                 //buttons[j] = new Button(app[j].getName(), new ImageView(app[j].getIcon());
-                appsButton[j] = new Button();
+                appsButton[j] = new Button(app.name);
                 ((Labeled) appsButton[j]).setGraphic(new ImageView(ICON_48));
-                ((Node) appsButton[j]).setTranslateX(35);
+                //((Node) appsButton[j]).setTranslateX(35);
                 //buttons[j].setPadding(new Insets(15));
                 ((Node) appsButton[j]).setOnMouseClicked(new EventHandlerRunApp((OAppProperty)apps.get(j)));
                 tilePane.getChildren().add((Node) appsButton[j]);
