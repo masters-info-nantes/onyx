@@ -1,9 +1,15 @@
-package com.onyx.gui;
+package com.onyx.core;
 
+import com.onyx.core.OCore;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -17,10 +23,10 @@ public class OGui extends OPlugin {
 	private BorderPane mainPane;
 	private MenuBar mainMenu;
 	private Menu hour, network;
+	private MenuBar bottomMenu;
+	private Menu back, home, settings;
 	private Pane centerPane;
-	
-	private int MAX_WIDTH;
-	private int MAX_HEIGHT;
+	public OCore core;
 	
     @Override
     public void onCreate() {
@@ -31,18 +37,37 @@ public class OGui extends OPlugin {
         hour = new Menu("Heure");
         network = new Menu("Network");
         mainMenu = new MenuBar();
-        Button button = new Button("Button");
-        System.out.println("Toto");
+		mainMenu.getMenus().addAll(hour, network);
+
+		back = new Menu();
+		Label backLabel = new Label("Back");
+		backLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				core.getCurrentActivity().backBtn();
+			}
+		});
+		back.setGraphic(backLabel);
+		home = new Menu();
+		Label homeLabel = new Label("Home");
+		homeLabel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				core.setApplication(OCore.LAUNCHER_APP);
+			}
+		});
+		home.setGraphic(homeLabel);
+		settings = new Menu("Settings");
+		bottomMenu = new MenuBar();
+		bottomMenu.getMenus().addAll(back, home, settings);
+
         
         centerPane = new Pane();
-        centerPane.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-        
-        
-        mainMenu.getMenus().addAll(hour, network);
+
 
         mainPane.setTop(mainMenu);
         mainPane.setCenter(centerPane);
-        mainPane.setBottom(button);
+        mainPane.setBottom(bottomMenu);
        
     }
 
@@ -57,27 +82,9 @@ public class OGui extends OPlugin {
 
 	public void setPaneApplication(Pane activity) {
 		centerPane = activity;
-		mainPane.setMaxHeight(MAX_HEIGHT);
-		mainPane.setMaxWidth(MAX_WIDTH);
+		mainPane.setMaxHeight(536);
+		mainPane.setMaxWidth(334);
         mainPane.setCenter(centerPane);
 	}
-
-	public void setMaxHeight(int height) {
-		this.MAX_HEIGHT = height;
-		
-	}
-
-	public void setMaxWidth(int width) {
-		this.MAX_WIDTH = width;
-	}
-
-	public int getMAX_WIDTH() {
-		return MAX_WIDTH;
-	}
-
-	public int getMAX_HEIGHT() {
-		return MAX_HEIGHT;
-	}
-	
 	
 }

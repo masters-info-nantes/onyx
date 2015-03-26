@@ -1,7 +1,6 @@
 package com.onyx.emulator;
 
 import com.onyx.core.OCore;
-import com.onyx.gui.OGui;
 import com.onyx.platform.OPlugin;
 import com.onyx.platform.OPluginProperty;
 import com.onyx.platform.errors.OPluginNotRunnableException;
@@ -23,8 +22,6 @@ public class OEmulator extends OPlugin{
             OCore core = (OCore) runPlugin(p);
             EmulatorUI ui = new EmulatorUI(core.getGui().getMainPane());
             this.getPlatform().getPrimaryStage().setScene(ui.getScene());
-            core.getGui().setMaxHeight(ui.getHEIGHT());
-            core.getGui().setMaxWidth(ui.getWIDTH());
         } catch (OPluginNotRunnableException e) {
             e.printStackTrace();
         }
