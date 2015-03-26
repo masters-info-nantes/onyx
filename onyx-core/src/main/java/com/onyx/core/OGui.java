@@ -31,9 +31,8 @@ public class OGui extends OPlugin {
 	
 	private BorderPane mainPane;
 	private MenuBar mainMenu;
-	private Menu hour, network;
 	private MenuBar bottomMenu;
-	private Menu back, home, settings;
+	private Menu back, home;
 	private Menu clock;
 	private Pane centerPane;
 	public OCore core;
@@ -44,7 +43,6 @@ public class OGui extends OPlugin {
         System.out.println("Chargement de l'interface");
         mainPane = new BorderPane();
         mainPane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-        network = new Menu("Network");
         clock = new Menu();
         mainMenu = new MenuBar();
         
@@ -61,7 +59,7 @@ public class OGui extends OPlugin {
         timeline.setCycleCount(Animation.INDEFINITE);  
         timeline.play();  
         
-        mainMenu.getMenus().addAll(clock, network);
+        mainMenu.getMenus().addAll(clock);
 
 		back = new Menu();
 		Label backLabel = new Label("Back");
@@ -81,9 +79,8 @@ public class OGui extends OPlugin {
 			}
 		});
 		home.setGraphic(homeLabel);
-		settings = new Menu("Settings");
 		bottomMenu = new MenuBar();
-		bottomMenu.getMenus().addAll(back, home, settings);
+		bottomMenu.getMenus().addAll(back, home);
 
         
         centerPane = new Pane();
