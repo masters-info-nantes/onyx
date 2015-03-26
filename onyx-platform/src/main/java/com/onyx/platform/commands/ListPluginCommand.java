@@ -15,6 +15,7 @@ public class ListPluginCommand extends OCommand{
         for(String key : getPlatform().getPlugins().keySet())
         {
             System.out.println("Plugin: "+ getPlatform().getPlugin(key).getName());
+            System.out.println("Version: "+ getPlatform().getPlugin(key).getVersion());
             System.out.println("Description: "+ getPlatform().getPlugin(key).getDescription()+"\n");
         }
     }

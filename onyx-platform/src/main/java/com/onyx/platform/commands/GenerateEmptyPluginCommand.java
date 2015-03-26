@@ -14,25 +14,35 @@ public class GenerateEmptyPluginCommand extends OCommand {
     @Override
     public void run(List<String> params)
     {
-
-        //OPluginProperty newPlugin = new OPluginProperty();
         Scanner sc = new Scanner(System.in);
-        System.out.print("Nom du plugin: ");
-        //newPlugin.pluginName = sc.nextLine();
-        System.out.print("Description du plugin: ");
-        //newPlugin.pluginDescription = sc.nextLine();
-        System.out.print("Classe principale du plugin: ");
-        //newPlugin.pluginMainClass = sc.nextLine();
-        System.out.print("Package du plugin: ");
-        //newPlugin.pluginPackage = sc.nextLine();
-        System.out.print("Emplacement du plugin: ");
-        try {
-            //newPlugin.pluginUrl = new URL("file://"+sc.nextLine());
-            new URL("file://"+sc.nextLine());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        // TO-DO
-        System.out.println("Plugin généré!");
+        System.out.println("Nom du plugin: ");
+        String pluginName = sc.nextLine();
+        System.out.println("Id du plugin: ");
+        String pluginId = sc.nextLine();
+        System.out.println("Version du plugin: ");
+        String pluginVersion = sc.nextLine();
+        System.out.println("Description du plugin: ");
+        String pluginDescription = sc.nextLine();
+        System.out.println("Classe principale du plugin: ");
+        String pluginMainClass = sc.nextLine();
+        System.out.println("Package du plugin: ");
+        String pluginPackage = sc.nextLine();
+
+        System.out.println();
+        System.out.println("OManifest");
+        System.out.println("---------");
+        System.out.println("<?xml version=\"1.0\"?>");
+        System.out.println("<manifest>");
+        System.out.println("\t<id>"+pluginId+"</id>");
+        System.out.println("\t<version>"+pluginVersion+"</version>");
+        System.out.println("\t<name>"+pluginName+"</name>");
+        System.out.println("\t<description>"+pluginDescription+"</description>");
+        if(!pluginMainClass.isEmpty())
+            System.out.println("\t<mainClass>"+pluginMainClass+"</mainClass>");
+        System.out.println("</manifest>");
+
+
+        System.out.println();
+        System.out.println("Manifest généré!");
     }
 }
