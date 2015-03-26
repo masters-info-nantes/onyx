@@ -4,8 +4,6 @@ import com.onyx.core.OActivity;
 import com.onyx.core.OSetting;
 import com.onyx.core.OSettingProperty;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 
@@ -60,6 +58,7 @@ public class OSettingsApp extends OActivity {
                 tp1.setText(prop.name);
                 try {
                     OSetting setting = (OSetting) prop.settingClass.newInstance();
+                    setting.setCore(this.getCore());
                     VBox inside = new VBox();
                     tp1.setContent(inside);
                     tp1.setExpanded(false);

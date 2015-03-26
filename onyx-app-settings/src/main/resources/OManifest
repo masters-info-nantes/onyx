@@ -20,4 +20,9 @@
             <settingClass>com.onyx.app.settings.OProxySetting</settingClass>
             <settingInterface>com.onyx.core.ONetworkSetting</settingInterface>
     </setting>
+    <setting>
+            <name>Background</name>
+            <settingClass>com.onyx.app.settings.OBackgroundSetting</settingClass>
+            <settingInterface>com.onyx.core.ODesignSetting</settingInterface>
+    </setting>
 </manifest>
