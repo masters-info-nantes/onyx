@@ -1,7 +1,7 @@
 package com.onyx.app.settings;
 
+import com.onyx.core.OActivity;
 import com.onyx.core.setting.ONetworkSetting;
-import com.onyx.core.setting.OSetting;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 /**
  * Created by Hollevoet Yehudi on 3/26/15.
  */
-public class OProxySetting extends OSetting implements ONetworkSetting{
+public class OProxySetting extends OActivity implements ONetworkSetting{
 
     @Override
     public void onCreate() {

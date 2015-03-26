@@ -1,7 +1,7 @@
 package com.onyx.app.settings;
 
+import com.onyx.core.OActivity;
 import com.onyx.core.setting.ODesignSetting;
-import com.onyx.core.setting.OSetting;
 import javafx.geometry.Insets;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -13,7 +13,7 @@ import javafx.scene.layout.*;
 /**
  * Created by wolkom on 3/26/15.
  */
-public class OBackgroundSetting extends OSetting implements ODesignSetting {
+public class OBackgroundSetting extends OActivity implements ODesignSetting {
     @Override
     public void onCreate() {
         super.onCreate();

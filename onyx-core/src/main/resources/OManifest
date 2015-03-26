@@ -13,6 +13,12 @@
     <command>
         <name>Generate empty application</name>
         <id>generateApplication</id>
+        <usage>[id] [name] [version] [mainActivity]</usage>
         <commandClass>com.onyx.core.command.GenerateEmptyApplicationCommand</commandClass>
+    </command>
+    <command>
+        <name>List all applications</name>
+        <id>listApplication</id>
+        <commandClass>com.onyx.core.command.ListApplicationCommand</commandClass>
     </command>
 </manifest>

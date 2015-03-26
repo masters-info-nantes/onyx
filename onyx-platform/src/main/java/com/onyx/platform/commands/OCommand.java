@@ -10,10 +10,15 @@ import java.util.List;
 public abstract class OCommand {
 
     OPlatform platform;
+    OCommandProperty property;
 
     public abstract void run(List<String> args);
 
     public OPlatform getPlatform() {
         return platform;
+    }
+
+    public OCommandProperty getProperty() {
+        return property;
     }
 }

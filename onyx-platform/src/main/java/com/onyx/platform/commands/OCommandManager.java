@@ -43,6 +43,7 @@ public class OCommandManager {
                 try {
                     oCommand = (OCommand) command.commandClass.newInstance();
                     oCommand.platform = this.platform;
+                    oCommand.property = command;
                     List<String> newParams = new ArrayList<String>();
                     for(int i = 0; i<params.size(); i++) {
                         if(i != 0)

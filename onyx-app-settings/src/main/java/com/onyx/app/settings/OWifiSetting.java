@@ -1,7 +1,7 @@
 package com.onyx.app.settings;
 
+import com.onyx.core.OActivity;
 import com.onyx.core.setting.ONetworkSetting;
-import com.onyx.core.setting.OSetting;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by Hollevoet Yehudi on 3/26/15.
  */
-public class OWifiSetting extends OSetting implements ONetworkSetting{
+public class OWifiSetting extends OActivity implements ONetworkSetting{
 
 
     @Override
