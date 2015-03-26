@@ -1,17 +1,26 @@
 package com.onyx.core;
 
-import com.onyx.core.OCore;
+import java.text.DateFormat;
+import java.util.Calendar;
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import com.onyx.platform.OPlugin;
 
@@ -25,6 +34,7 @@ public class OGui extends OPlugin {
 	private Menu hour, network;
 	private MenuBar bottomMenu;
 	private Menu back, home, settings;
+	private Menu clock;
 	private Pane centerPane;
 	public OCore core;
 	
@@ -34,10 +44,24 @@ public class OGui extends OPlugin {
         System.out.println("Chargement de l'interface");
         mainPane = new BorderPane();
         mainPane.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-        hour = new Menu("Heure");
         network = new Menu("Network");
+        clock = new Menu();
         mainMenu = new MenuBar();
-		mainMenu.getMenus().addAll(hour, network);
+        
+          
+        final DateFormat format = DateFormat.getInstance();  
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {  
+             @Override  
+             public void handle(ActionEvent event) {  
+            	 final Calendar cal = Calendar.getInstance();  
+                 clock.setText(format.format(cal.getTime()));  
+             }  
+        }));  
+
+        timeline.setCycleCount(Animation.INDEFINITE);  
+        timeline.play();  
+        
+        mainMenu.getMenus().addAll(clock, network);
 
 		back = new Menu();
 		Label backLabel = new Label("Back");
