@@ -4,13 +4,17 @@ import com.onyx.platform.OService;
 import com.onyx.platform.OServiceValue;
 
 /**
- * Created by wolkom on 3/19/15.
+ * Created by Hollevoet Yehudi on 3/19/15.
  */
 
-@OService(name="network")
+@OService(name="setting")
 public class OSettingProperty {
     @OServiceValue(name="name")
-    String name;
-    @OServiceValue(name="mainPanel")
-    Class panel;
+    public String name;
+
+    @OServiceValue(name="settingClass")
+    public Class settingClass;
+
+    @OServiceValue(name="settingInterface")
+    public Class settingInterface;
 }

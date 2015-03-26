@@ -38,6 +38,7 @@
         <module>onyx-app-launcher</module>
         <module>onyx-app-web-browser</module>
         <module>onyx-gui</module>
+        <module>onyx-app-settings</module>
     </modules>
 
     <dependencyManagement>

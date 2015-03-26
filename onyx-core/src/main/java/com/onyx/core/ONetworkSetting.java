@@ -1,7 +1,9 @@
 package com.onyx.core;
 
 /**
- * Created by wolkom on 3/19/15.
+ * Created by Hollevoet Yehudi on 3/19/15.
  */
-public interface ONetworkSetting {
+public interface ONetworkSetting{
+    public final static String name = "Network";
+
 }
