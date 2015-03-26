@@ -14,6 +14,7 @@ public class OProxySetting extends OSetting implements ONetworkSetting{
 
     @Override
     public void onCreate() {
+        super.onCreate();
         GridPane grid = new GridPane();
         grid.setVgap(4);
         grid.setPadding(new Insets(4, 4, 4, 4));
@@ -21,6 +22,6 @@ public class OProxySetting extends OSetting implements ONetworkSetting{
         grid.add(new TextField(), 1, 0);
         grid.add(new Label("Port : "), 0, 1);
         grid.add(new TextField(), 1, 1);
-        getPanel().getChildren().add(grid);
+        getPane().getChildren().add(grid);
     }
 }

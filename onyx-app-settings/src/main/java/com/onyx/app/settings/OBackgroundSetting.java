@@ -16,6 +16,7 @@ import javafx.scene.layout.*;
 public class OBackgroundSetting extends OSetting implements ODesignSetting {
     @Override
     public void onCreate() {
+        super.onCreate();
         HBox box = new HBox();
         final Label label = new Label("Color : ");
         final ColorPicker colorPicker = new ColorPicker();
@@ -28,6 +29,6 @@ public class OBackgroundSetting extends OSetting implements ODesignSetting {
         });
 
         box.getChildren().addAll(label, colorPicker);
-        getPanel().getChildren().add(box);
+        getPane().getChildren().add(box);
     }
 }

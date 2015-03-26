@@ -3,7 +3,6 @@ package com.onyx.app.settings;
 import com.onyx.core.setting.ONetworkSetting;
 import com.onyx.core.setting.OSetting;
 import javafx.event.EventHandler;
-import javafx.geometry.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +21,7 @@ public class OWifiSetting extends OSetting implements ONetworkSetting{
 
     @Override
     public void onCreate() {
+        super.onCreate();
         final VBox vbox=new VBox(5);
         List<String> ssids = new ArrayList<>();
         Background normal= new Background(new BackgroundFill(Color.LIGHTGRAY, new CornerRadii(5), Insets.EMPTY));
@@ -55,6 +55,6 @@ public class OWifiSetting extends OSetting implements ONetworkSetting{
             });
             vbox.getChildren().add(label);
         }
-        getPanel().getChildren().add(vbox);
+        getPane().getChildren().add(vbox);
     }
 }
