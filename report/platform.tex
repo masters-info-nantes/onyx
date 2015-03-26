@@ -12,15 +12,15 @@ Lorsqu'on lance la plateforme sans aucun paramètres, elle va automatiquement ch
 
 \subsection{Lancement par commandes}
 
-Pour lancer des actions spécifiques de la plateforme, vous pouvez passer des commandes à l'execution. Si vous passez par maven, il faut passer les commandes comme ceci: -Dexec.args="--command"
+Pour lancer des actions spécifiques de la plateforme, vous pouvez passer des commandes à l'execution. Si vous passez par maven, il faut passer les commandes comme ceci: -Dexec.args="-command"
 
-\subsubsection{"--help"}
+\subsubsection{"-help"}
 La commande help liste toutes les commandes disponibles sur la plateforme, idéal pour commencer à appréhender le fonctionnement de cette dernière.
 
-\subsubsection{"--pluginList"}
+\subsubsection{"-pluginList"}
 La commande pluginList liste tous les plugins disponibles sur la plateforme.
 
-\subsubsection{"--generatePlugin"}
+\subsubsection{"-generatePlugin"}
 La commande generatePlugin permet de générer automatiquement un plugin, lorsque vous la tapez, elle vous affichera alors un menu ou vous rentrerez les infortations relatives à votre plugin.
 
 \section{Structure}
@@ -108,9 +108,9 @@ public class myMainClass extends OPlugin{
 }
 \end{verbatim}
 
-Pour que votre plugin soit correctement reconnu par la plateforme, vous devez lui fournir un fichier Omanifest sous cette forme:
+Pour que votre plugin soit correctement reconnu par la plateforme, vous devez lui fournir un fichier OManifest sous cette forme:
 Attention! Si vous définissez des dépendances pour le plugin, vous devez les inclure dans maven
-\subsubsection{Omanifest}
+\subsubsection{OManifest}
 \begin{verbatim}
 <?xml version="1.0"?>
 <manifest>
@@ -178,13 +178,31 @@ Chaque plugin peut apporter son lot de commandes avec lui, pour les définir, il
 </manifest>
 \end{verbatim}
 
-\subsection{Déclaration d'un service}
+\subsection{Déclaration d'un nouveau type de service}
 Tout comme les commandes, chaque plugin peut apporter son lot de services avec lui, pour les définir, il suffit d'ajouter le code suivant dans le manifest:
 \begin{verbatim}
 <manifest>
     ...
     <services>
-        <service>com.onyx.core.MyService</service>
+        <service>com.onyx.core.OAppProperty</service>
     </services>
+</manifest>
+\end{verbatim}
+
+et la classe service devra contenir certaines annotations pour être interprété
+
+\includegraphics[width=10cm]{figures/newServiceType.png}
+
+\subsection{Déclaration d'un service}
+
+Chaque plugin peut apporter son lot de service avec lui, l'ajout d'une commande est en réalisté l'ajout d'un service, son serviceType est quand à lui le seul présent de base dans la platforme. Ainsi le serviceType application est présent dans le core. Pour les définir, il suffit d'ajouter la description de la classe serviceType au manifest, voici un exemple pour le serviceType créé au dessus : 
+
+\begin{verbatim}
+<manifest>
+    ...
+    <application>
+        <id>mycommand</id>
+        <mainActivity>com.onyx.myplugin.mainActivity</mainActivity>
+    </command>
 </manifest>
 \end{verbatim}
