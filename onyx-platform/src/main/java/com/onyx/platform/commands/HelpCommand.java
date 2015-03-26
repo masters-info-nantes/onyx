@@ -11,7 +11,7 @@ public class HelpCommand extends OCommand {
         System.out.println("Help : list of all commands");
         for(Object obj : getPlatform().getServices("command")) {
             OCommandProperty commandProperty = (OCommandProperty) obj;
-            System.out.println("\t--"+commandProperty.id+" "+commandProperty.usage+" : "+commandProperty.name);
+            System.out.println("\t-"+commandProperty.id+" "+commandProperty.usage+" : "+commandProperty.name);
         }
     }
 }
