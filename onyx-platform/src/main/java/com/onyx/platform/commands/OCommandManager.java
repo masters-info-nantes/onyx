@@ -38,7 +38,7 @@ public class OCommandManager {
     public void run(List<String> params) {
         for(Object obj : platform.getServices("command")) {
             OCommandProperty command = (OCommandProperty) obj;
-            if(params.get(0).equals("--" + command.id)) {
+            if(params.get(0).equals("-" + command.id)) {
                 OCommand oCommand = null;
                 try {
                     oCommand = (OCommand) command.commandClass.newInstance();
