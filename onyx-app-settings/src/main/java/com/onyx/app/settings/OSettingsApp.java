@@ -1,8 +1,8 @@
 package com.onyx.app.settings;
 
 import com.onyx.core.OActivity;
-import com.onyx.core.OSetting;
-import com.onyx.core.OSettingProperty;
+import com.onyx.core.setting.OSetting;
+import com.onyx.core.setting.OSettingProperty;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.VBox;
 

@@ -13,16 +13,16 @@
     <setting>
             <name>Wifi</name>
             <settingClass>com.onyx.app.settings.OWifiSetting</settingClass>
-            <settingInterface>com.onyx.core.ONetworkSetting</settingInterface>
+            <settingInterface>com.onyx.core.setting.ONetworkSetting</settingInterface>
     </setting>
     <setting>
             <name>Proxy</name>
             <settingClass>com.onyx.app.settings.OProxySetting</settingClass>
-            <settingInterface>com.onyx.core.ONetworkSetting</settingInterface>
+            <settingInterface>com.onyx.core.setting.ONetworkSetting</settingInterface>
     </setting>
     <setting>
             <name>Background</name>
             <settingClass>com.onyx.app.settings.OBackgroundSetting</settingClass>
-            <settingInterface>com.onyx.core.ODesignSetting</settingInterface>
+            <settingInterface>com.onyx.core.setting.ODesignSetting</settingInterface>
     </setting>
 </manifest>

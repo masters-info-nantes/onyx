@@ -1,7 +1,7 @@
 package com.onyx.app.settings;
 
-import com.onyx.core.ODesignSetting;
-import com.onyx.core.OSetting;
+import com.onyx.core.setting.ODesignSetting;
+import com.onyx.core.setting.OSetting;
 import javafx.geometry.Insets;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;

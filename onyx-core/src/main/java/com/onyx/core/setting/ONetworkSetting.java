@@ -1,4 +1,4 @@
-package com.onyx.core;
+package com.onyx.core.setting;
 
 /**
  * Created by Hollevoet Yehudi on 3/19/15.

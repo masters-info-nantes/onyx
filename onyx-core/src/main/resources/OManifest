@@ -8,7 +8,7 @@
 
     <services>
         <service>com.onyx.core.OAppProperty</service>
-        <service>com.onyx.core.OSettingProperty</service>
+        <service>com.onyx.core.setting.OSettingProperty</service>
     </services>
     <command>
         <name>Generate empty application</name>

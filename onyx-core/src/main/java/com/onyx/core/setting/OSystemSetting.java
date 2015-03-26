@@ -1,4 +1,4 @@
-package com.onyx.core;
+package com.onyx.core.setting;
 
 /**
  * Created by wolkom on 3/19/15.

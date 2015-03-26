@@ -1,5 +1,6 @@
-package com.onyx.core;
+package com.onyx.core.setting;
 
+import com.onyx.core.OCore;
 import javafx.scene.layout.Pane;
 
 /**

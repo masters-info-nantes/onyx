@@ -1,4 +1,4 @@
-package com.onyx.core;
+package com.onyx.core.setting;
 
 import com.onyx.platform.OService;
 import com.onyx.platform.OServiceValue;

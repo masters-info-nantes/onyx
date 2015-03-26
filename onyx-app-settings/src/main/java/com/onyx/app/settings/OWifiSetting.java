@@ -1,7 +1,7 @@
 package com.onyx.app.settings;
 
-import com.onyx.core.ONetworkSetting;
-import com.onyx.core.OSetting;
+import com.onyx.core.setting.ONetworkSetting;
+import com.onyx.core.setting.OSetting;
 
 /**
  * Created by Hollevoet Yehudi on 3/26/15.
