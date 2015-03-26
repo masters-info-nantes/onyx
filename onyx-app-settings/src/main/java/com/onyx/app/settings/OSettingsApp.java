@@ -4,7 +4,13 @@ import com.onyx.core.OActivity;
 import com.onyx.core.OSetting;
 import com.onyx.core.OSettingProperty;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -22,7 +28,9 @@ public class OSettingsApp extends OActivity {
     public void onCreate() {
         super.onCreate();
         vboxpanel = new VBox();
-        vboxpanel.setMinWidth(getPane().getWidth());
+        vboxpanel.setPrefWidth(334);
+
+        vboxpanel.setStyle("-fx-background-color: #cccccc;");
         catProperties = new HashMap<>();
         List<Object> settings = getPlatform().getServices("setting");
         for (Object s : settings) {
@@ -42,10 +50,11 @@ public class OSettingsApp extends OActivity {
             catProperties.get(name).add(prop);
         }
         for(String s : catProperties.keySet()) {
-            TitledPane tp = new TitledPane();
-            tp.setMinWidth(vboxpanel.getMinWidth());
-            tp.setText(s);
+            VBox tp= vboxpanel;
             VBox buttons = new VBox();
+            Label title = new Label(s);
+            title.setFont(new Font(20));
+            buttons.getChildren().add(title);
             for(OSettingProperty prop : catProperties.get(s)){
                 TitledPane tp1 = new TitledPane();
                 tp1.setText(prop.name);
@@ -63,8 +72,7 @@ public class OSettingsApp extends OActivity {
                     e.printStackTrace();
                 }
             }
-            tp.setContent(buttons);
-            vboxpanel.getChildren().add(tp);
+            tp.getChildren().add(buttons);
         }
         System.out.println(getPane());
         System.out.println(getPane().getChildren());
