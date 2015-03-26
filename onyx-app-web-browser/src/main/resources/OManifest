@@ -10,4 +10,9 @@
         <name>Web Browser</name>
         <id>com.onyx.webbrowser.app</id>
     </application>
+    <setting>
+        <name>Web Browser</name>
+        <settingClass>com.onyx.webbrowser.OWebBrowserSetting</settingClass>
+        <settingInterface>com.onyx.core.setting.OAppSetting</settingInterface>
+    </setting>
 </manifest>
