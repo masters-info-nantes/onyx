@@ -66,6 +66,7 @@ public class OCore extends OPlugin {
 					activity.platform = this.getPlatform();
 					activity.core = this;
 					activity.parent = getCurrentActivity();
+					activity.property = getCurrentApp();
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
