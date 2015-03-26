@@ -1,6 +1,5 @@
 package com.onyx.core;
 
-import com.onyx.gui.OGui;
 import com.onyx.platform.OPlugin;
 import com.onyx.platform.OPluginProperty;
 import com.onyx.platform.errors.OPluginNotRunnableException;
@@ -21,13 +20,17 @@ public class OCore extends OPlugin {
 	@Override
 	public void onCreate() {
 		System.out.println("Chargement du core");
-		OPluginProperty p = this.getPlatform().getPlugin("com.onyx.gui");
+		gui = new OGui();
+		gui.onCreate();
+		gui.core = this;
+		/*OPluginProperty p = this.getPlatform().getPlugin("com.onyx.gui");
 		try {
 			gui = (OGui) runPlugin(p);
+			gui.core = this;
 		} catch (OPluginNotRunnableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
         setApplication(LAUNCHER_APP);
 	}
 
@@ -42,8 +45,8 @@ public class OCore extends OPlugin {
 		for (Object obj : apps) {
 			OAppProperty app = (OAppProperty) obj;
 			if(app.id.equals(name)) {
-				if(currentActivity != null){
-					currentActivity.onStop();
+				if(getCurrentActivity() != null){
+					getCurrentActivity().onStop();
 				}
 				currentApp = app;
 				currentActivity = null;
@@ -54,15 +57,15 @@ public class OCore extends OPlugin {
 	}
 
 	public void setActivity(Class className){
-				if(currentActivity != null){
-					currentActivity.onStop();
+				if(getCurrentActivity() != null){
+					getCurrentActivity().onStop();
 				}
 				OActivity activity = null;
 				try {
 					activity = (OActivity) className.newInstance();
 					activity.platform = this.getPlatform();
 					activity.core = this;
-					activity.parent = currentActivity;
+					activity.parent = getCurrentActivity();
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
 				}
@@ -77,4 +80,11 @@ public class OCore extends OPlugin {
 	}
 
 
+	public OActivity getCurrentActivity() {
+		return currentActivity;
+	}
+
+	public OAppProperty getCurrentApp() {
+		return currentApp;
+	}
 }

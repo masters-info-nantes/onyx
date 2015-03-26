@@ -26,10 +26,8 @@ public class OWebBrowser extends OActivity {
         browser = new WebView();
         webEngine = browser.getEngine();
         webEngine.load("http://google.fr");
-        browser.setMaxWidth(getWidth());
-        browser.setMaxHeight(getHeight());
-        System.out.println(getWidth());
-        System.out.println(getHeight());
+        browser.setMaxHeight(536);
+        browser.setMaxWidth(334);
 
         getPane().getChildren().add(browser);
     }
@@ -40,18 +38,17 @@ public class OWebBrowser extends OActivity {
         ObservableList<WebHistory.Entry> entryList = history.getEntries();
         int currentIndex = history.getCurrentIndex();
 
+        if(history.getCurrentIndex() == 0) {
+            super.backBtn();
+            return;
+        }
+
         Platform.runLater(new Runnable() {
             public void run() {
-                history.go(1);
+                history.go(- 1);
             }
         });
-        if (currentIndex < entryList.size() - 2) {
-            entryList.get(currentIndex + 1);
-            // dans le cas ou il n'y a plus d'historique il dechanche le btn retour classique qui va "normalement" faire un retour au launcher
-            super.backBtn();
-        } else {
-            entryList.get(history.getCurrentIndex());
-            browser.getEngine().load(entryList.get(currentIndex).getUrl());
-        }
+
+
     }
 }

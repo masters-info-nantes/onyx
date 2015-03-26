@@ -13,14 +13,9 @@ public abstract class OActivity {
     OCore core;
     OActivity parent = null;
     OAppProperty property;
-    
-    private int height;
-    private int width;
 	
     public void onCreate(){
     	mainPane = new Pane();
-    	this.height = core.getGui().getMAX_HEIGHT();
-    	this.width = core.getGui().getMAX_WIDTH();
     }
     
     public void onStop(){
@@ -49,14 +44,5 @@ public abstract class OActivity {
     public OCore getCore() {
         return core;
     }
-
-	public int getHeight() {
-		return height;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-    
     
 }
